@@ -349,7 +349,7 @@ function isValidMove(index, number) {
   const col = index % 9;
 
   // Check row
-  for (let c = 0; c < 9; c++) km {
+  for (let c = 0; c < 9; c++)  {
     const pos = row * 9 + c;
     if (pos !== index && Number(cells[pos].textContent) === number) {
       return false;
