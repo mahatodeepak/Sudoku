@@ -101,6 +101,10 @@ button {
   padding: 10px 0;
   font-size: 18px;
     }
+  .cell.selected {
+  background: #d9edf7;
+  outline: 2px solid #2196f3;
+  }
 </style>
 </head>
 
@@ -256,7 +260,12 @@ function createBoard() {
     cell.className = "cell";
     cell.addEventListener("click", function() {
   if (puzzle[i] === 0) {
+    document.querySelectorAll(".cell").forEach(c => {
+      c.classList.remove("selected");
+    });
+
     selectedCell = this;
+    this.classList.add("selected");
   }
 });
 
