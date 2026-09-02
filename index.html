@@ -67,7 +67,9 @@ button {
 <script>
 
 
- const solution = [
+ 
+
+const solution = [
   5,3,4,6,7,8,9,1,2,
   6,7,2,1,9,5,3,4,8,
   1,9,8,3,4,2,5,6,7,
@@ -77,11 +79,12 @@ button {
   9,6,1,5,3,7,2,8,4,
   2,8,7,4,1,9,6,3,5,
   3,4,5,2,8,6,1,7,9
-]; 
-  let puzzle = [];
+];
+
+let puzzle = [];
 
 function generatePuzzle() {
-  puzzle = solution.map((number) => {
+  puzzle = solution.map(number => {
     return Math.random() < 0.5 ? 0 : number;
   });
 }
@@ -98,28 +101,30 @@ function createBoard() {
       cell.textContent = puzzle[i];
       cell.style.fontWeight = "bold";
     } else {
-      cell.textContent = "";
       cell.contentEditable = true;
 
       cell.addEventListener("input", function() {
-  this.textContent = this.textContent.replace(/[^1-9]/g, "").slice(0,1);
+        this.textContent =
+          this.textContent.replace(/[^1-9]/g, "").slice(0, 1);
 
-  if (this.textContent !== "") {
-    if (Number(this.textContent) === solution[i]) {
-      this.style.color = "green";
-    } else {
-      this.style.color = "red";
-    }
-  }
+        if (this.textContent !== "") {
+          if (Number(this.textContent) === solution[i]) {
+            this.style.color = "green";
+          } else {
+            this.style.color = "red";
+          }
+        }
+
         if (checkComplete()) {
-  alert("🏆 Congratulations! You solved the Sudoku!");
-  }
-});
+          alert("🏆 Congratulations! You solved the Sudoku!");
+        }
+      });
     }
 
     board.appendChild(cell);
   }
 }
+
 function checkComplete() {
   const cells = document.querySelectorAll(".cell");
 
@@ -130,7 +135,8 @@ function checkComplete() {
   }
 
   return true;
-  }
+}
+
 function newGame() {
   generatePuzzle();
   createBoard();
