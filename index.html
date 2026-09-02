@@ -66,16 +66,39 @@ button {
   font-weight: bold;
   white-space: nowrap;
 }
+  #topBar {
+  position: relative;
+  width: 360px;
+  max-width: 95vw;
+  margin: 0 auto;
+}
+
+#topBar h1 {
+  margin: 20px 0;
+  text-align: center;
+}
+
+#timer {
+  position: absolute;
+  right: 0;
+  top: 25px;
+  font-size: 14px;
+  font-weight: bold;
+  white-space: nowrap;
+}
 </style>
 </head>
 
 <body>
 
-<h1>Sudoku</h1>
+<div id="topBar">
+  <h1>Sudoku</h1>
+  <div id="timer">Time: 00:00</div>
+</div>
 
 <div id="gameArea">
   <div id="board"></div>
-  <div id="timer">Time: 00:00</div>
+  
 </div>
 
 <button onclick="newGame()">New Game</button>
