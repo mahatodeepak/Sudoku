@@ -284,7 +284,7 @@ function createBoard() {
       cell.textContent = puzzle[i];
       cell.style.fontWeight = "bold";
     } else {
-      cell.contentEditable = true;
+      cell.contentEditable = false;
 
       cell.addEventListener("input", function() {
         this.textContent =
