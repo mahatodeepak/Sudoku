@@ -413,14 +413,22 @@ if (!isValidMove(index, number)) {
 selectedCell.textContent = number;
 
   if (number === solution[index]) {
-    selectedCell.style.color = "green";
-  } else {
-    selectedCell.style.color = "red";
+  selectedCell.style.color = "green";
+  alert("🎉 Great!");
 
-    mistakes++;
+} else {
+  selectedCell.style.color = "red";
 
-    document.getElementById("mistakes").textContent =
-      "Mistakes: " + mistakes;
+  mistakes++;
+  score = Math.max(0, score - 5);
+
+  document.getElementById("mistakes").textContent =
+    "Mistakes: " + mistakes;
+
+  document.getElementById("score").textContent =
+    "Score: " + score;
+
+  alert("❌ Wrong!");
   }
 
   if (checkComplete()) {
