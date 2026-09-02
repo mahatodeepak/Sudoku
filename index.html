@@ -141,6 +141,9 @@ button {
   padding: 8px 10px;
   font-size: 14px;
     }
+  .cell.same-number {
+  background: #fff3cd;
+  }
 </style>
 </head>
 
@@ -416,6 +419,7 @@ function checkComplete() {
   }
   function showResult() {
   const result = document.getElementById("result");
+    result.style.display = "block";
 
   result.innerHTML =
     "🏆 Congratulations!<br>" +
@@ -439,6 +443,26 @@ function checkComplete() {
   setTimeout(function() {
     result.innerHTML = "";
   }, 3000);
+  }
+  function highlightSameNumbers() {
+  const cells = document.querySelectorAll(".cell");
+
+  // Remove previous highlights
+  cells.forEach(cell => {
+    cell.classList.remove("same-number");
+  });
+
+  if (selectedCell === null || selectedCell.textContent === "") {
+    return;
+  }
+
+  const number = selectedCell.textContent;
+
+  cells.forEach(cell => {
+    if (cell.textContent === number) {
+      cell.classList.add("same-number");
+    }
+  });
   }
 function enterNumber(number) {
   if (selectedCell === null) {
