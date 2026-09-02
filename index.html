@@ -116,13 +116,26 @@ function createBoard() {
       this.style.color = "red";
     }
   }
+        if (checkComplete()) {
+  alert("🏆 Congratulations! You solved the Sudoku!");
+  }
 });
     }
 
     board.appendChild(cell);
   }
 }
+function checkComplete() {
+  const cells = document.querySelectorAll(".cell");
 
+  for (let i = 0; i < 81; i++) {
+    if (cells[i].textContent != solution[i]) {
+      return false;
+    }
+  }
+
+  return true;
+  }
 function newGame() {
   createBoard();
 }
