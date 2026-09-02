@@ -349,7 +349,7 @@ function isValidMove(index, number) {
   const col = index % 9;
 
   // Check row
-  for (let c = 0; c < 9; c++) {
+  for (let c = 0; c < 9; c++) km {
     const pos = row * 9 + c;
     if (pos !== index && Number(cells[pos].textContent) === number) {
       return false;
@@ -406,7 +406,19 @@ function enterNumber(number) {
 const index = Array.from(cells).indexOf(selectedCell);
 
 if (!isValidMove(index, number)) {
-  alert("⚠️ This number is already used in this row, column, or 3×3 box.");
+  selectedCell.textContent = number;
+  selectedCell.style.color = "red";
+
+  mistakes++;
+  score = Math.max(0, score - 5);
+
+  document.getElementById("mistakes").textContent =
+    "Mistakes: " + mistakes;
+
+  document.getElementById("score").textContent =
+    "Score: " + score;
+
+  alert("❌ Wrong!");
   return;
 }
 
@@ -414,7 +426,7 @@ selectedCell.textContent = number;
 
   if (number === solution[index]) {
   selectedCell.style.color = "green";
-  alert("🎉 Great!");
+  showMessage("🎉 Great!");
 
 } else {
   selectedCell.style.color = "red";
@@ -428,7 +440,7 @@ selectedCell.textContent = number;
   document.getElementById("score").textContent =
     "Score: " + score;
 
-  alert("❌ Wrong!");
+  showMessage("❌ Wrong!");
   }
 
   if (checkComplete()) {
