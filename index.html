@@ -418,12 +418,27 @@ function checkComplete() {
   const result = document.getElementById("result");
 
   result.innerHTML =
-    "🏆 Sudoku Complete!<br>" +
+    "🏆 Congratulations!<br>" +
     "Score: " + score + " / 100<br>" +
     "Mistakes: " + mistakes + "<br>" +
     document.getElementById("timer").textContent;
 
-  result.style.display = "block";
+  result.style.position = "fixed";
+  result.style.top = "50%";
+  result.style.left = "50%";
+  result.style.transform = "translate(-50%, -50%)";
+  result.style.padding = "20px 25px";
+  result.style.background = "white";
+  result.style.border = "3px solid #333";
+  result.style.borderRadius = "15px";
+  result.style.fontSize = "22px";
+  result.style.fontWeight = "bold";
+  result.style.textAlign = "center";
+  result.style.zIndex = "10000";
+
+  setTimeout(function() {
+    result.innerHTML = "";
+  }, 3000);
   }
 function enterNumber(number) {
   if (selectedCell === null) {
