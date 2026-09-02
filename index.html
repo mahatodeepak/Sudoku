@@ -496,19 +496,25 @@ function enterNumber(number) {
 
   // Wrong answer
   else {
-    selectedCell.style.color = "red";
+  selectedCell.style.color = "red";
 
-    mistakes++;
-    score = Math.max(0, score - 5);
+  mistakes++;
+  score = Math.max(0, score - 5);
 
-    document.getElementById("mistakes").textContent =
-      "Mistakes: " + mistakes;
+  document.getElementById("mistakes").textContent =
+    "Mistakes: " + mistakes;
 
-    document.getElementById("score").textContent =
-      "Score: " + score;
+  document.getElementById("score").textContent =
+    "Score: " + score;
 
-    showMessage("❌ Wrong!");
-  }
+  showMessage("❌ Wrong!");
+
+  setTimeout(function() {
+    selectedCell.textContent = "";
+    selectedCell.style.color = "black";
+    cellValues[index] = "";
+  }, 3000);
+}
 
   if (checkComplete()) {
   stopTimer();
