@@ -111,10 +111,7 @@ button {
   padding: 10px 0;
   font-size: 18px;
     }
-  .cell.selected {
-  background: #d9edf7;
-  outline: 2px solid #2196f3;
-  }
+  
   #newGame {
   display: inline-block;
   margin: 5px;
@@ -143,7 +140,13 @@ button {
     }
   .cell.same-number {
   background: #fff3cd;
-  }
+}
+
+.cell.selected {
+  background: #d9edf7;
+  outline: 3px solid #2196f3;
+  outline-offset: -3px;
+}
 </style>
 </head>
 
@@ -305,14 +308,15 @@ function createBoard() {
     const cell = document.createElement("div");
     cell.className = "cell";
     cell.addEventListener("click", function() {
-  if (puzzle[i] === 0) {
-    document.querySelectorAll(".cell").forEach(c => {
-      c.classList.remove("selected");
-    });
 
-    selectedCell = this;
-    this.classList.add("selected");
-  }
+  document.querySelectorAll(".cell").forEach(c => {
+    c.classList.remove("selected");
+  });
+
+  selectedCell = this;
+  this.classList.add("selected");
+
+  highlightSameNumbers();
 });
 
     if (puzzle[i] !== 0) {
@@ -525,6 +529,8 @@ function newGame() {
     currentClues = clues;
   startTimer();
   mistakes = 0;
+    cellValues = Array(81).fill("");
+selectedCell = null;
   document.getElementById("mistakes").textContent = "Mistakes: 0";
     score = 100;
 document.getElementById("score").textContent = "Score: 100";
