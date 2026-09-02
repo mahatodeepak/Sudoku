@@ -445,8 +445,9 @@ function checkComplete() {
   result.style.zIndex = "10000";
 
   setTimeout(function() {
-    result.innerHTML = "";
-  }, 3000);
+  result.innerHTML = "";
+  result.style.display = "none";
+}, 3000);
   }
   function highlightSameNumbers() {
   const cells = document.querySelectorAll(".cell");
