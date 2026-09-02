@@ -78,14 +78,15 @@ button {
   text-align: center;
 }
 
-#timer {
+
+  #status {
   position: absolute;
   right: 0;
-  top: 25px;
+  top: 20px;
+  text-align: right;
   font-size: 14px;
   font-weight: bold;
-  white-space: nowrap;
-}
+  }
 </style>
 </head>
 
@@ -93,7 +94,10 @@ button {
 
 <div id="topBar">
   <h1>Sudoku</h1>
+  <div id="status">
   <div id="timer">Time: 00:00</div>
+  <div id="mistakes">Mistakes: 0</div>
+  </div>
 </div>
 
 <div id="gameArea">
@@ -183,6 +187,7 @@ let solution = [
   }
 let timerInterval;
 let seconds = 0;
+  let mistakes = 0;
 
 function startTimer() {
   clearInterval(timerInterval);
@@ -235,10 +240,13 @@ function createBoard() {
 
         if (this.textContent !== "") {
           if (Number(this.textContent) === solution[i]) {
-            this.style.color = "green";
-          } else {
-            this.style.color = "red";
-          }
+  this.style.color = "green";
+} else {
+  this.style.color = "red";
+  mistakes++;
+  document.getElementById("mistakes").textContent =
+    "Mistakes: " + mistakes;
+      }
         }
 
         if (checkComplete()) {
@@ -269,7 +277,9 @@ function newGame() {
   createBoard();
 }
   function startGame(clues) {
-      startTimer();
+  startTimer();
+  mistakes = 0;
+  document.getElementById("mistakes").textContent = "Mistakes: 0";
   generatePuzzle();
 
   let positions = Array.from({length: 81}, (_, i) => i);
