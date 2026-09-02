@@ -418,44 +418,48 @@ function enterNumber(number) {
     return;
   }
 
-  const oldValue = selectedCell.textContent;
+  const cells = document.querySelectorAll(".cell");
+  const index = Array.from(cells).indexOf(selectedCell);
 
-  // Same number pressed again — do nothing
+  const oldValue = cellValues[index];
+
+  // Same number again: do nothing
   if (oldValue === String(number)) {
     return;
   }
 
-  const cells = document.querySelectorAll(".cell");
-const index = Array.from(cells).indexOf(selectedCell);
+  // Put the new number in the cell
+  selectedCell.textContent = number;
+  cellValues[index] = String(number);
 
-
-
-selectedCell.textContent = number;
-
+  // Correct answer
   if (number === solution[index]) {
-  selectedCell.style.color = "green";
-  showMessage("🎉 Great!");
+    selectedCell.style.color = "green";
+    showMessage("🎉 Great!");
+  }
 
-} else {
-  selectedCell.style.color = "red";
+  // Wrong answer
+  else {
+    selectedCell.style.color = "red";
 
-  mistakes++;
-  score = Math.max(0, score - 5);
+    mistakes++;
+    score = Math.max(0, score - 5);
 
-  document.getElementById("mistakes").textContent =
-    "Mistakes: " + mistakes;
+    document.getElementById("mistakes").textContent =
+      "Mistakes: " + mistakes;
 
-  document.getElementById("score").textContent =
-    "Score: " + score;
+    document.getElementById("score").textContent =
+      "Score: " + score;
 
-  showMessage("❌ Wrong!");
+    showMessage("❌ Wrong!");
   }
 
   if (checkComplete()) {
     stopTimer();
-    alert("🏆 Congratulations! You solved the Sudoku!");
+    showMessage("🏆 Congratulations!");
   }
-  }
+}
+  
   function eraseNumber() {
   if (selectedCell !== null) {
     selectedCell.textContent = "";
