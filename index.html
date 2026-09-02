@@ -153,6 +153,7 @@ button {
   <div id="mistakes">Mistakes: 0</div>
   <div id="score">Score: 100</div>
   </div>
+  <div id="result"></div>
 </div>
 
 <div id="gameArea">
@@ -413,6 +414,17 @@ function checkComplete() {
     box.remove();
   }, 1000);
   }
+  function showResult() {
+  const result = document.getElementById("result");
+
+  result.innerHTML =
+    "🏆 Sudoku Complete!<br>" +
+    "Score: " + score + " / 100<br>" +
+    "Mistakes: " + mistakes + "<br>" +
+    document.getElementById("timer").textContent;
+
+  result.style.display = "block";
+  }
 function enterNumber(number) {
   if (selectedCell === null) {
     return;
@@ -455,8 +467,8 @@ function enterNumber(number) {
   }
 
   if (checkComplete()) {
-    stopTimer();
-    showMessage("🏆 Congratulations!");
+  stopTimer();
+  showResult();
   }
 }
   
