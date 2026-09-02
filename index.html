@@ -96,8 +96,16 @@ function createBoard() {
       cell.contentEditable = true;
 
       cell.addEventListener("input", function() {
-        this.textContent = this.textContent.replace(/[^1-9]/g, "").slice(0,1);
-      });
+  this.textContent = this.textContent.replace(/[^1-9]/g, "").slice(0,1);
+
+  if (this.textContent !== "") {
+    if (Number(this.textContent) === solution[i]) {
+      this.style.color = "green";
+    } else {
+      this.style.color = "red";
+    }
+  }
+});
     }
 
     board.appendChild(cell);
