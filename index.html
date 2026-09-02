@@ -87,6 +87,20 @@ button {
   font-size: 14px;
   font-weight: bold;
   }
+  #keypad {
+  width: 360px;
+  max-width: 95vw;
+  margin: 10px auto;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
+}
+
+#keypad button {
+  margin: 0;
+  padding: 10px 0;
+  font-size: 18px;
+    }
 </style>
 </head>
 
@@ -106,6 +120,18 @@ button {
 </div>
 
 <button onclick="newGame()">New Game</button>
+  <div id="keypad">
+  <button onclick="enterNumber(1)">1</button>
+  <button onclick="enterNumber(2)">2</button>
+  <button onclick="enterNumber(3)">3</button>
+  <button onclick="enterNumber(4)">4</button>
+  <button onclick="enterNumber(5)">5</button>
+  <button onclick="enterNumber(6)">6</button>
+  <button onclick="enterNumber(7)">7</button>
+  <button onclick="enterNumber(8)">8</button>
+  <button onclick="enterNumber(9)">9</button>
+  <button onclick="eraseNumber()">⌫</button>
+  </div>
   <div>
   <button onclick="startGame(45)">Easy</button>
   <button onclick="startGame(35)">Medium</button>
@@ -188,6 +214,7 @@ let solution = [
 let timerInterval;
 let seconds = 0;
   let mistakes = 0;
+  let selectedCell = null;
 
 function startTimer() {
   clearInterval(timerInterval);
@@ -227,6 +254,11 @@ function createBoard() {
   for (let i = 0; i < 81; i++) {
     const cell = document.createElement("div");
     cell.className = "cell";
+    cell.addEventListener("click", function() {
+  if (puzzle[i] === 0) {
+    selectedCell = this;
+  }
+});
 
     if (puzzle[i] !== 0) {
       cell.textContent = puzzle[i];
@@ -271,7 +303,36 @@ function checkComplete() {
 
   return true;
 }
+function enterNumber(number) {
+  if (selectedCell === null) {
+    return;
+  }
 
+  selectedCell.textContent = number;
+
+  const cells = document.querySelectorAll(".cell");
+  const index = Array.from(cells).indexOf(selectedCell);
+
+  if (number === solution[index]) {
+    selectedCell.style.color = "green";
+  } else {
+    selectedCell.style.color = "red";
+    mistakes++;
+    document.getElementById("mistakes").textContent =
+      "Mistakes: " + mistakes;
+  }
+
+  if (checkComplete()) {
+    stopTimer();
+    alert("🏆 Congratulations! You solved the Sudoku!");
+  }
+}
+  function eraseNumber() {
+  if (selectedCell !== null) {
+    selectedCell.textContent = "";
+    selectedCell.style.color = "black";
+  }
+  }
 function newGame() {
   generatePuzzle();
   createBoard();
