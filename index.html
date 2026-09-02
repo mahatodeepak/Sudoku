@@ -122,7 +122,7 @@ button {
   font-size: 16px;
   font-weight: bold;
   cursor: pointer;
-  text-decoration: underline;
+  
   }
   #gameControls {
   width: 360px;
@@ -280,6 +280,7 @@ function stopTimer() {
   clearInterval(timerInterval);
   }
 let puzzle = [];
+  let currentClues = 45;
 
 function generatePuzzle() {
   solution = generateSolution();
