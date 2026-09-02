@@ -151,6 +151,7 @@ button {
   <div id="status">
   <div id="timer">Time: 00:00</div>
   <div id="mistakes">Mistakes: 0</div>
+  <div id="score">Score: 100</div>
   </div>
 </div>
 
@@ -256,6 +257,7 @@ let solution = [
 let timerInterval;
 let seconds = 0;
   let mistakes = 0;
+  let score = 100;
   let selectedCell = null;
   let cellValues = Array(81).fill("");
 
@@ -441,6 +443,8 @@ function newGame() {
   startTimer();
   mistakes = 0;
   document.getElementById("mistakes").textContent = "Mistakes: 0";
+    score = 100;
+document.getElementById("score").textContent = "Score: 100";
   generatePuzzle();
 
   let positions = Array.from({length: 81}, (_, i) => i);
