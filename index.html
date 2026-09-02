@@ -4,7 +4,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sudoku Game</title>
   
-<div id="timer">Time: 00:00</div>
+
 <style>
 body {
   font-family: Arial, sans-serif;
@@ -54,6 +54,18 @@ button {
   background: #333;
   color: white;
 }
+  #gameArea {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+#timer {
+  font-size: 16px;
+  font-weight: bold;
+  white-space: nowrap;
+}
 </style>
 </head>
 
@@ -61,7 +73,10 @@ button {
 
 <h1>Sudoku</h1>
 
-<div id="board"></div>
+<div id="gameArea">
+  <div id="board"></div>
+  <div id="timer">Time: 00:00</div>
+</div>
 
 <button onclick="newGame()">New Game</button>
   <div>
