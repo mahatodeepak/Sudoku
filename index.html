@@ -66,13 +66,7 @@ button {
 
 <script>
 
-let puzzle = [];
 
-function generatePuzzle() {
-  puzzle = solution.map((number, index) => {
-    return Math.random() < 0.5 ? 0 : number;
-  });
-  }
  const solution = [
   5,3,4,6,7,8,9,1,2,
   6,7,2,1,9,5,3,4,8,
@@ -84,6 +78,13 @@ function generatePuzzle() {
   2,8,7,4,1,9,6,3,5,
   3,4,5,2,8,6,1,7,9
 ]; 
+  let puzzle = [];
+
+function generatePuzzle() {
+  puzzle = solution.map((number) => {
+    return Math.random() < 0.5 ? 0 : number;
+  });
+}
 
 function createBoard() {
   const board = document.getElementById("board");
