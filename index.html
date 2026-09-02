@@ -428,22 +428,7 @@ function enterNumber(number) {
   const cells = document.querySelectorAll(".cell");
 const index = Array.from(cells).indexOf(selectedCell);
 
-if (!isValidMove(index, number)) {
-  selectedCell.textContent = number;
-  selectedCell.style.color = "red";
 
-  mistakes++;
-  score = Math.max(0, score - 5);
-
-  document.getElementById("mistakes").textContent =
-    "Mistakes: " + mistakes;
-
-  document.getElementById("score").textContent =
-    "Score: " + score;
-
-  alert("❌ Wrong!");
-  return;
-}
 
 selectedCell.textContent = number;
 
