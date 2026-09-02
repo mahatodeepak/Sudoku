@@ -1,284 +1,115 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Sudoku Master</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sudoku Game</title>
+
 <style>
-*{box-sizing:border-box}
-body{margin:0;font-family:Arial;background:#f2f4f7;text-align:center;color:#222}
-.container{max-width:500px;margin:auto;padding:12px}
-h1{margin:8px 0}
-#message{min-height:25px;font-weight:bold}
-.controls{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin:10px 0}
-button,select{padding:9px 12px;border:0;border-radius:7px;font-size:14px}
-button{background:#333;color:white}
-#board{
-width:min(94vw,450px);
-height:min(94vw,450px);
-margin:15px auto;
-display:grid;
-grid-template-columns:repeat(9,1fr);
-border:3px solid #111;
-background:#111;
-gap:1px
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  background: #f2f2f2;
 }
-.cell{
-background:white;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:clamp(18px,6vw,28px);
-font-weight:bold;
-cursor:pointer
+
+h1 {
+  margin-top: 20px;
 }
-.fixed{background:#ddd!important;color:#111}
-.selected{background:#c9e6ff!important}
-.same{background:#e8f4ff!important}
-.error{background:#ffbdbd!important;color:#b00000}
-.stats{display:flex;justify-content:space-around;font-weight:bold}
-.numbers{
-display:grid;
-grid-template-columns:repeat(9,1fr);
-gap:5px;
-max-width:450px;
-margin:10px auto
+
+#board {
+  width: 360px;
+  max-width: 95vw;
+  margin: 20px auto;
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  border: 3px solid black;
 }
-.num{background:#1976d2;color:white;padding:12px 0;font-size:18px}
+
+.cell {
+  aspect-ratio: 1;
+  background: white;
+  border: 1px solid #999;
+  font-size: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cell:nth-child(3n) {
+  border-right: 3px solid black;
+}
+
+.cell:nth-child(n+19):nth-child(-n+27),
+.cell:nth-child(n+46):nth-child(-n+54),
+.cell:nth-child(n+73):nth-child(-n+81) {
+  border-bottom: 3px solid black;
+}
+
+button {
+  font-size: 18px;
+  padding: 10px 20px;
+  margin: 8px;
+  border-radius: 8px;
+  border: none;
+  background: #333;
+  color: white;
+}
 </style>
 </head>
 
 <body>
-<div class="container">
 
-<h1>🧩 Sudoku Master</h1>
-
-<div id="message">Fill the empty cells.</div>
-
-<div class="controls">
-<select id="difficulty">
-<option value="easy">Easy</option>
-<option value="medium" selected>Medium</option>
-<option value="hard">Hard</option>
-</select>
-<button onclick="newGame()">New Puzzle</button>
-<button onclick="checkGame()">Check</button>
-<button onclick="hint()">💡 Hint</button>
-<button onclick="clearCell()">Clear</button>
-</div>
-
-<div class="stats">
-<div>Mistakes: <span id="mistakes">0</span></div>
-<div>Time: <span id="time">00:00</span></div>
-</div>
+<h1>Sudoku</h1>
 
 <div id="board"></div>
 
-<div class="numbers">
-<button class="num" onclick="putNumber(1)">1</button>
-<button class="num" onclick="putNumber(2)">2</button>
-<button class="num" onclick="putNumber(3)">3</button>
-<button class="num" onclick="putNumber(4)">4</button>
-<button class="num" onclick="putNumber(5)">5</button>
-<button class="num" onclick="putNumber(6)">6</button>
-<button class="num" onclick="putNumber(7)">7</button>
-<button class="num" onclick="putNumber(8)">8</button>
-<button class="num" onclick="putNumber(9)">9</button>
-</div>
-
-</div>
+<button onclick="newGame()">New Game</button>
 
 <script>
-let puzzle=[],solution=[],board=[],selected=-1,mistakes=0,seconds=0,timer;
 
-function shuffle(a){
- a=[...a];
- for(let i=a.length-1;i>0;i--){
-  let j=Math.floor(Math.random()*(i+1));
-  [a[i],a[j]]=[a[j],a[i]];
- }
- return a;
-}
+const puzzle = [
+  5,3,0,0,7,0,0,0,0,
+  6,0,0,1,9,5,0,0,0,
+  0,9,8,0,0,0,0,6,0,
 
-function generateSolution(){
- let g=Array.from({length:9},()=>Array(9).fill(0));
+  8,0,0,0,6,0,0,0,3,
+  4,0,0,8,0,3,0,0,1,
+  7,0,0,0,2,0,0,0,6,
 
- function valid(r,c,n){
-  for(let i=0;i<9;i++){
-   if(g[r][i]==n||g[i][c]==n)return false;
+  0,6,0,0,0,0,2,8,0,
+  0,0,0,4,1,9,0,0,5,
+  0,0,0,0,8,0,0,7,9
+];
+
+function createBoard() {
+  const board = document.getElementById("board");
+  board.innerHTML = "";
+
+  for (let i = 0; i < 81; i++) {
+    const cell = document.createElement("div");
+    cell.className = "cell";
+
+    if (puzzle[i] !== 0) {
+      cell.textContent = puzzle[i];
+      cell.style.fontWeight = "bold";
+    } else {
+      cell.textContent = "";
+      cell.contentEditable = true;
+
+      cell.addEventListener("input", function() {
+        this.textContent = this.textContent.replace(/[^1-9]/g, "").slice(0,1);
+      });
+    }
+
+    board.appendChild(cell);
   }
-  let rr=Math.floor(r/3)*3,cc=Math.floor(c/3)*3;
-  for(let i=rr;i<rr+3;i++)
-   for(let j=cc;j<cc+3;j++)
-    if(g[i][j]==n)return false;
-  return true;
- }
-
- function solve(pos){
-  if(pos==81)return true;
-  let r=Math.floor(pos/9),c=pos%9;
-  for(let n of shuffle([1,2,3,4,5,6,7,8,9])){
-   if(valid(r,c,n)){
-    g[r][c]=n;
-    if(solve(pos+1))return true;
-    g[r][c]=0;
-   }
-  }
-  return false;
- }
-
- solve(0);
- return g.flat();
 }
 
-function createPuzzle(){
- solution=generateSolution();
- let level=document.getElementById("difficulty").value;
- let holes=level=="easy"?35:level=="medium"?45:52;
-
- puzzle=[...solution];
-
- for(let p of shuffle([...Array(81).keys()]).slice(0,holes))
-  puzzle[p]=0;
-
- board=[...puzzle];
+function newGame() {
+  createBoard();
 }
 
-function drawBoard(){
- let b=document.getElementById("board");
- b.innerHTML="";
+createBoard();
 
- for(let i=0;i<81;i++){
-  let c=document.createElement("div");
-  c.className="cell";
-
-  if(puzzle[i]){
-   c.textContent=puzzle[i];
-   c.classList.add("fixed");
-  }else{
-   c.textContent=board[i]||"";
-  }
-
-  c.onclick=()=>selectCell(i);
-  b.appendChild(c);
- }
-
- updateHighlight();
-}
-
-function selectCell(i){
- if(puzzle[i])return;
- selected=i;
- updateHighlight();
-}
-
-function updateHighlight(){
- let cells=document.querySelectorAll(".cell");
-
- cells.forEach((c,i)=>{
-  c.classList.remove("selected","same");
-
-  if(i==selected)c.classList.add("selected");
-
-  if(selected>=0 && board[selected] &&
-     board[i]==board[selected])
-   c.classList.add("same");
- });
-}
-
-function putNumber(n){
- if(selected<0){
-  message("Select an empty cell first.");
-  return;
- }
-
- if(!puzzle[selected]){
-  board[selected]=n;
-  drawBoard();
- }
-}
-
-function clearCell(){
- if(selected>=0 && !puzzle[selected]){
-  board[selected]=0;
-  drawBoard();
- }
-}
-
-function checkGame(){
- let cells=document.querySelectorAll(".cell");
- let wrong=0,empty=0;
-
- for(let i=0;i<81;i++){
-  cells[i].classList.remove("error");
-
-  if(!puzzle[i]){
-   if(!board[i])empty++;
-   else if(board[i]!=solution[i]){
-    cells[i].classList.add("error");
-    wrong++;
-   }
-  }
- }
-
- if(wrong){
-  mistakes+=wrong;
-  document.getElementById("mistakes").textContent=mistakes;
-  message("❌ Some numbers are incorrect.");
- }else if(empty){
-  message("👍 Correct so far. Keep going!");
- }else{
-  message("🎉 Congratulations! Sudoku solved!");
-  clearInterval(timer);
- }
-}
-
-function hint(){
- let empty=[];
-
- for(let i=0;i<81;i++)
-  if(!puzzle[i] && board[i]!=solution[i])
-   empty.push(i);
-
- if(!empty.length){
-  message("No hint needed!");
-  return;
- }
-
- let i=empty[Math.floor(Math.random()*empty.length)];
- board[i]=solution[i];
- selected=i;
- drawBoard();
- message("💡 Hint added!");
-}
-
-function message(t){
- document.getElementById("message").textContent=t;
-}
-
-function newGame(){
- clearInterval(timer);
- mistakes=0;
- seconds=0;
- selected=-1;
-
- document.getElementById("mistakes").textContent=0;
- document.getElementById("time").textContent="00:00";
-
- createPuzzle();
- drawBoard();
- message("Fill the empty cells.");
-
- timer=setInterval(()=>{
-  seconds++;
-  let m=String(Math.floor(seconds/60)).padStart(2,"0");
-  let s=String(seconds%60).padStart(2,"0");
-  document.getElementById("time").textContent=m+":"+s;
- },1000);
-}
-
-document.getElementById("difficulty").onchange=newGame;
-
-newGame();
 </script>
 
 </body>
