@@ -319,6 +319,7 @@ function enterNumber(number) {
 
   const oldValue = selectedCell.textContent;
 
+  // Same number pressed again — do nothing
   if (oldValue === String(number)) {
     return;
   }
@@ -332,7 +333,9 @@ function enterNumber(number) {
     selectedCell.style.color = "green";
   } else {
     selectedCell.style.color = "red";
+
     mistakes++;
+
     document.getElementById("mistakes").textContent =
       "Mistakes: " + mistakes;
   }
@@ -341,7 +344,7 @@ function enterNumber(number) {
     stopTimer();
     alert("🏆 Congratulations! You solved the Sudoku!");
   }
-}
+  }
   function eraseNumber() {
   if (selectedCell !== null) {
     selectedCell.textContent = "";
