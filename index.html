@@ -317,6 +317,12 @@ function enterNumber(number) {
     return;
   }
 
+  const oldValue = selectedCell.textContent;
+
+  if (oldValue === String(number)) {
+    return;
+  }
+
   selectedCell.textContent = number;
 
   const cells = document.querySelectorAll(".cell");
