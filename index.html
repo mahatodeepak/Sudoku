@@ -400,10 +400,15 @@ function enterNumber(number) {
     return;
   }
 
-  selectedCell.textContent = number;
-
   const cells = document.querySelectorAll(".cell");
-  const index = Array.from(cells).indexOf(selectedCell);
+const index = Array.from(cells).indexOf(selectedCell);
+
+if (!isValidMove(index, number)) {
+  alert("⚠️ This number is already used in this row, column, or 3×3 box.");
+  return;
+}
+
+selectedCell.textContent = number;
 
   if (number === solution[index]) {
     selectedCell.style.color = "green";
