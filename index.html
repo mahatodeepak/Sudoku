@@ -395,6 +395,7 @@ function newGame() {
   createBoard();
 }
   function startGame(clues) {
+    currentClues = clues;
   startTimer();
   mistakes = 0;
   document.getElementById("mistakes").textContent = "Mistakes: 0";
