@@ -321,6 +321,7 @@ function createBoard() {
   selectedCell = this;
   this.classList.add("selected");
 
+      highlightRowColumn(this);
   highlightSameNumbers();
 });
 
