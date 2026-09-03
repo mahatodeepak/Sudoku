@@ -569,8 +569,15 @@ setTimeout(function() {
   
   function eraseNumber() {
   if (selectedCell !== null) {
+    const cells = document.querySelectorAll(".cell");
+    const index = Array.from(cells).indexOf(selectedCell);
+
     selectedCell.textContent = "";
     selectedCell.style.color = "black";
+    cellValues[index] = "";
+
+    highlightRowColumn(selectedCell);
+    highlightSameNumbers();
   }
   }
 function newGame() {
