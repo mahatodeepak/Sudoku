@@ -273,6 +273,7 @@ let solution = [
   return array;
   }
   function generateSolution() {
+    let random = seededRandom(seedFromId(currentPuzzleId));
   let grid = Array(81).fill(0);
 
   function isSafe(pos, num) {
@@ -302,7 +303,12 @@ let solution = [
   function solve(pos) {
     if (pos === 81) return true;
 
-    let numbers = shuffle([1,2,3,4,5,6,7,8,9]);
+    let numbers = [1,2,3,4,5,6,7,8,9];
+
+for (let i = numbers.length - 1; i > 0; i--) {
+  const j = Math.floor(random() * (i + 1));
+  [numbers[i], numbers[j]] = [numbers[j], numbers[i]];
+}
 
     for (let num of numbers) {
       if (isSafe(pos, num)) {
