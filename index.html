@@ -443,8 +443,9 @@ function createBoard() {
         }
 
         if (checkComplete()) {
-           stopTimer();
-          alert("🏆 Congratulations! You solved the Sudoku!");
+   stopTimer();
+   document.getElementById("winMessage").textContent =
+     "🏆 Congratulations! You solved the Sudoku!";
         }
       });
     }
