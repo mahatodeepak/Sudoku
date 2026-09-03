@@ -333,9 +333,14 @@ let seconds = 0;
   let selectedCell = null;
   let cellValues = Array(81).fill("");
   
-  let easyPuzzleNumber = 1;
-let mediumPuzzleNumber = 1;
-let hardPuzzleNumber = 1;
+  let easyPuzzleNumber =
+  Number(localStorage.getItem("easyPuzzleNumber") || 1);
+
+let mediumPuzzleNumber =
+  Number(localStorage.getItem("mediumPuzzleNumber") || 1);
+
+let hardPuzzleNumber =
+  Number(localStorage.getItem("hardPuzzleNumber") || 1);
 
 function startTimer() {
   clearInterval(timerInterval);
@@ -650,12 +655,15 @@ let puzzleNumber;
 if (clues === 45) {
   prefix = "EG";
   puzzleNumber = easyPuzzleNumber++;
+  localStorage.setItem("easyPuzzleNumber", easyPuzzleNumber);
 } else if (clues === 35) {
   prefix = "MG";
   puzzleNumber = mediumPuzzleNumber++;
+  localStorage.setItem("mediumPuzzleNumber", mediumPuzzleNumber);
 } else {
   prefix = "HG";
   puzzleNumber = hardPuzzleNumber++;
+  localStorage.setItem("hardPuzzleNumber", hardPuzzleNumber);
 }
 
 document.getElementById("sudokuId").textContent =
