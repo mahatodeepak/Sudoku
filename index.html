@@ -730,7 +730,10 @@ currentPuzzleId =
     localStorage.setItem("currentPuzzleId", currentPuzzleId);
   startTimer();
   mistakes = 0;
-    cellValues = Array(81).fill("");
+    cellValues = JSON.parse(
+  localStorage.getItem("savedCells_" + currentPuzzleId) ||
+  "null"
+) || Array(81).fill("");
 selectedCell = null;
   document.getElementById("mistakes").textContent = "Mistakes: 0";
     score = 100;
