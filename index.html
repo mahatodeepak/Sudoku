@@ -160,23 +160,27 @@ button {
   background-color: #e8f4ff;
 }
   #gameInfo {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  margin: -5px 5px 0 5px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 78px;
+  height: 42px;
+  pointer-events: none;
 }
 
 #sudokuId {
-  align-self: flex-end;
-}
-
-#sudokuId {
+  position: absolute;
+  left: 0;
+  bottom: 0;
   font-size: 14px;
   font-weight: bold;
   margin: 0;
 }
 
 #rightInfo {
+  position: absolute;
+  right: 0;
+  top: 0;
   text-align: right;
   font-size: 14px;
   font-weight: bold;
