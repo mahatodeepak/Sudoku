@@ -339,6 +339,7 @@ function stopTimer() {
   }
 let puzzle = [];
   let currentClues = 45;
+  let currentPuzzleId = "";
 
 function generatePuzzle() {
   solution = generateSolution();
@@ -637,7 +638,10 @@ if (clues === 45) {
 }
 
 document.getElementById("sudokuId").textContent =
-  "Sudoku ID: " + prefix + "-" + String(puzzleNumber).padStart(6, "0");
+  "Game Number: " + prefix + "-" + String(puzzleNumber).padStart(6, "0");
+
+currentPuzzleId =
+  prefix + "-" + String(puzzleNumber).padStart(6, "0");
   startTimer();
   mistakes = 0;
     cellValues = Array(81).fill("");
