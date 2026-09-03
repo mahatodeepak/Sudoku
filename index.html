@@ -357,7 +357,10 @@ let seconds = 0;
   let mistakes = 0;
   let score = 100;
   let selectedCell = null;
-  let cellValues = Array(81).fill("");
+  cellValues = JSON.parse(
+  localStorage.getItem("savedCells_" + currentPuzzleId) ||
+  "null"
+) || Array(81).fill("");
   
   let easyPuzzleNumber =
   Number(localStorage.getItem("easyPuzzleNumber") || 1);
@@ -422,6 +425,11 @@ function createBoard() {
 });
 
     if (puzzle[i] !== 0) {
+      if (puzzle[i] === 0 && cellValues[i] !== "") {
+  cell.textContent = cellValues[i];
+  cell.style.color =
+    Number(cellValues[i]) === solution[i] ? "green" : "red";
+      } 
       cell.textContent = puzzle[i];
       cell.style.fontWeight = "bold";
     } else {
@@ -432,6 +440,11 @@ function createBoard() {
           this.textContent.replace(/[^1-9]/g, "").slice(0, 1);
 
         if (this.textContent !== "") {
+          cellValues[i] = this.textContent;
+localStorage.setItem(
+  "savedCells_" + currentPuzzleId,
+  JSON.stringify(cellValues)
+);
           if (Number(this.textContent) === solution[i]) {
   this.style.color = "green";
 } else {
