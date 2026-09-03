@@ -190,6 +190,12 @@ button {
   display: block;
   margin: 10px auto 5px auto;
 }
+  #loadGameControls {
+  width: 360px;
+  max-width: 95vw;
+  margin: 5px auto 10px auto;
+  text-align: center;
+  }
 
 #gameIdInput + button {
   display: block;
@@ -235,14 +241,15 @@ button {
   </div>
   <div id="gameControls">
   <span id="newGame">New Game</span>
-    <br>
-    <input id="gameIdInput" type="text" placeholder="Enter Game Number">
-<button onclick="loadGameById()">Load Game</button>
-  
   <button onclick="startGame(45, true)">Easy</button>
-<button onclick="startGame(35, true)">Medium</button>
-<button onclick="startGame(25, true)">Hard</button>
-  </div>
+  <button onclick="startGame(35, true)">Medium</button>
+  <button onclick="startGame(25, true)">Hard</button>
+</div>
+
+<div id="loadGameControls">
+  <input id="gameIdInput" type="text" placeholder="Enter Game Number">
+  <button onclick="loadGameById()">Load Game</button>
+</div>
 
 <script>
 
