@@ -162,15 +162,23 @@ button {
   #gameInfo {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   margin: 0 5px 2px 5px;
-  width: calc(100% - 10px);
-  }
+}
 
-#sudokuId,
-#score {
+#sudokuId {
   font-size: 14px;
   font-weight: bold;
+  margin: 0;
+}
+
+#rightInfo {
+  text-align: right;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+#rightInfo div {
   margin: 0;
 }
 </style>
@@ -182,13 +190,13 @@ button {
   <h1>Sudoku</h1>
   <div id="gameInfo">
   <div id="sudokuId">Game Number: EG-000001</div>
-  <div id="score">Score: 100</div>
-</div>
 
-<div id="status">
-  <div id="timer">Time: 00:00</div>
-  <div id="mistakes">Mistakes: 0</div>
-</div>
+  <div id="rightInfo">
+    <div id="score">Score: 100</div>
+    <div id="timer">Time: 00:00</div>
+    <div id="mistakes">Mistakes: 0</div>
+  </div>
+  </div>
   <div id="result"></div>
 </div>
 
