@@ -248,6 +248,21 @@ let solution = [
   2,8,7,4,1,9,6,3,5,
   3,4,5,2,8,6,1,7,9
 ];
+  function seedFromId(id) {
+  let seed = 0;
+
+  for (let i = 0; i < id.length; i++) {
+    seed = (seed * 31 + id.charCodeAt(i)) >>> 0;
+  }
+
+  return seed;
+  }
+  function seededRandom(seed) {
+  return function() {
+    seed = (seed * 1664525 + 1013904223) >>> 0;
+    return seed / 4294967296;
+  };
+  }
   function shuffle(array) {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
