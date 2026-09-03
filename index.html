@@ -503,7 +503,7 @@ function checkComplete() {
   cells.forEach(cell => {
     if (cell.textContent === number) {
       cell.classList.add("same-number");
-    }
+    } 
   });
   }
 function enterNumber(number) {
@@ -524,6 +524,9 @@ function enterNumber(number) {
   // Put the new number in the cell
   selectedCell.textContent = number;
   cellValues[index] = String(number);
+  
+  highlightRowColumn(selectedCell);
+  highlightSameNumbers();
 
   // Correct answer
   if (number === solution[index]) {
