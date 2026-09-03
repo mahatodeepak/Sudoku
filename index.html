@@ -155,6 +155,10 @@ button {
   .cell.same-number {
   background-color: #fff59d;
   }
+  .cell.row-highlight,
+.cell.col-highlight {
+  background-color: #e8f4ff;
+}
 </style>
 </head>
 
@@ -457,6 +461,30 @@ function checkComplete() {
   result.innerHTML = "";
   result.style.display = "none";
 }, 3000);
+  }
+  function highlightRowColumn(cell) {
+  const cells = document.querySelectorAll(".cell");
+  const index = Array.from(cells).indexOf(cell);
+
+  const row = Math.floor(index / 9);
+  const col = index % 9;
+
+  cells.forEach((c, i) => {
+    c.classList.remove("row-highlight", "col-highlight");
+
+    const r = Math.floor(i / 9);
+    const cIndex = i % 9;
+
+    if (r === row) {
+      c.classList.add("row-highlight");
+    }
+
+    if (cIndex === col) {
+      c.classList.add("col-highlight");
+    }
+  });
+
+  cell.classList.add("selected");
   }
   function highlightSameNumbers() {
   const cells = document.querySelectorAll(".cell");
