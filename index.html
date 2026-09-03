@@ -647,7 +647,7 @@ function newGame() {
   generatePuzzle();
   createBoard();
 }
-  function startGame(clues) {
+  function startGame(clues, newPuzzle = true) {
     currentClues = clues;
     let prefix;
 let puzzleNumber;
