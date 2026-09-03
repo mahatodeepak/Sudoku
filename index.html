@@ -717,22 +717,8 @@ puzzle = Array(81).fill(0);
   createBoard();
         }
 
-let savedPuzzleId = localStorage.getItem("currentPuzzleId");
-
-if (savedPuzzleId) {
-  currentPuzzleId = savedPuzzleId;
-
-  if (savedPuzzleId.startsWith("EG-")) {
-    startGame(45, false);
-  } else if (savedPuzzleId.startsWith("MG-")) {
-    startGame(35, false);
-  } else {
-    startGame(25, false);
-  }
-} else {
-  currentPuzzleId = "EG-000001";
-  startGame(45);
-}
+currentPuzzleId = "EG-000001";
+startGame(45);
 
 </script>
 
