@@ -549,11 +549,16 @@ function enterNumber(number) {
 
   showMessage("❌ Wrong!");
 
-  setTimeout(function() {
-    selectedCell.textContent = "";
-    selectedCell.style.color = "black";
-    cellValues[index] = "";
-  }, 3000);
+  const wrongCell = selectedCell;
+
+setTimeout(function() {
+  wrongCell.textContent = "";
+  wrongCell.style.color = "black";
+  cellValues[index] = "";
+
+  highlightRowColumn(wrongCell);
+  highlightSameNumbers();
+}, 3000);
 }
 
   if (checkComplete()) {
