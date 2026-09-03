@@ -591,6 +591,22 @@ function newGame() {
 }
   function startGame(clues) {
     currentClues = clues;
+    let prefix;
+let puzzleNumber;
+
+if (clues === 45) {
+  prefix = "EG";
+  puzzleNumber = easyPuzzleNumber++;
+} else if (clues === 35) {
+  prefix = "MG";
+  puzzleNumber = mediumPuzzleNumber++;
+} else {
+  prefix = "HG";
+  puzzleNumber = hardPuzzleNumber++;
+}
+
+document.getElementById("sudokuId").textContent =
+  "Sudoku ID: " + prefix + "-" + String(puzzleNumber).padStart(6, "0");
   startTimer();
   mistakes = 0;
     cellValues = Array(81).fill("");
