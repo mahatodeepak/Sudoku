@@ -652,18 +652,34 @@ function newGame() {
     let prefix;
 let puzzleNumber;
 
-if (clues === 45) {
-  prefix = "EG";
-  puzzleNumber = easyPuzzleNumber++;
-  localStorage.setItem("easyPuzzleNumber", easyPuzzleNumber);
-} else if (clues === 35) {
-  prefix = "MG";
-  puzzleNumber = mediumPuzzleNumber++;
-  localStorage.setItem("mediumPuzzleNumber", mediumPuzzleNumber);
+if (newPuzzle) {
+
+  if (clues === 45) {
+    prefix = "EG";
+    puzzleNumber = easyPuzzleNumber++;
+    localStorage.setItem("easyPuzzleNumber", easyPuzzleNumber);
+
+  } else if (clues === 35) {
+    prefix = "MG";
+    puzzleNumber = mediumPuzzleNumber++;
+    localStorage.setItem("mediumPuzzleNumber", mediumPuzzleNumber);
+
+  } else {
+    prefix = "HG";
+    puzzleNumber = hardPuzzleNumber++;
+    localStorage.setItem("hardPuzzleNumber", hardPuzzleNumber);
+  }
+
+  currentPuzzleId =
+    prefix + "-" + String(puzzleNumber).padStart(6, "0");
+
+  localStorage.setItem("currentPuzzleId", currentPuzzleId);
+
 } else {
-  prefix = "HG";
-  puzzleNumber = hardPuzzleNumber++;
-  localStorage.setItem("hardPuzzleNumber", hardPuzzleNumber);
+
+  prefix = currentPuzzleId.substring(0, 2);
+  puzzleNumber = Number(currentPuzzleId.substring(3));
+
 }
 
 document.getElementById("sudokuId").textContent =
@@ -707,11 +723,11 @@ if (savedPuzzleId) {
   currentPuzzleId = savedPuzzleId;
 
   if (savedPuzzleId.startsWith("EG-")) {
-    startGame(45);
+    startGame(45, false);
   } else if (savedPuzzleId.startsWith("MG-")) {
-    startGame(35);
+    startGame(35, false);
   } else {
-    startGame(25);
+    startGame(25, false);
   }
 } else {
   currentPuzzleId = "EG-000001";
