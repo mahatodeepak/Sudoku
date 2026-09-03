@@ -750,6 +750,21 @@ puzzle = Array(81).fill(0);
   createBoard();
         }
 function loadGameById() {
+  function shareGame() {
+  const message =
+    "🎯 Play my Sudoku!\n" +
+    "Game Number: " + currentPuzzleId + "\n" +
+    "Enter this Game Number in Load Game to play the same puzzle.";
+
+  if (navigator.share) {
+    navigator.share({
+      title: "Sudoku Game",
+      text: message
+    });
+  } else {
+    alert(message);
+  }
+  }
   let id = document.getElementById("gameIdInput").value.trim().toUpperCase();
 
   if (!/^[EMH]G-\d{6}$/.test(id)) {
