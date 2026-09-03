@@ -756,14 +756,11 @@ function loadGameById() {
     "Game Number: " + currentPuzzleId + "\n" +
     "Enter this Game Number in Load Game to play the same puzzle.";
 
-  if (navigator.share) {
-    navigator.share({
-      title: "Sudoku Game",
-      text: message
-    });
-  } else {
+  navigator.clipboard.writeText(message).then(function() {
+    alert("Game Number copied!\n\n" + message);
+  }).catch(function() {
     alert(message);
-  }
+  });
   }
   let id = document.getElementById("gameIdInput").value.trim().toUpperCase();
 
