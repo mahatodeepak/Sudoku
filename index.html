@@ -357,10 +357,7 @@ let seconds = 0;
   let mistakes = 0;
   let score = 100;
   let selectedCell = null;
-  cellValues = JSON.parse(
-  localStorage.getItem("savedCells_" + currentPuzzleId) ||
-  "null"
-) || Array(81).fill("");
+  let cellValues = Array(81).fill("");
   
   let easyPuzzleNumber =
   Number(localStorage.getItem("easyPuzzleNumber") || 1);
