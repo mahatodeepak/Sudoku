@@ -211,18 +211,30 @@ button {
 
 <div id="topBar">
   <h1>Sudoku</h1>
-  <div id="gameInfo">
-  <div id="sudokuId">Game Number: EG-000001</div>
 
-  <div id="rightInfo">
-    
-    <div id="timer">Time: 00:00</div>
-    <div id="mistakes">Mistakes: 0</div>
-    <div id="score">Score: 100</div>
+  <div id="gameInfo">
+
+    <div id="leftInfo">
+      <div id="gameIdControls">
+        <input id="gameIdInput" type="text" placeholder="Enter Game Number">
+        <button onclick="loadGameById()">Load Game</button>
+      </div>
+
+      <div id="sudokuId">Game Number: EG-000001</div>
+    </div>
+
+    <div id="rightInfo">
+      <div id="timer">Time: 00:00</div>
+      <div id="mistakes">Mistakes: 0</div>
+      <div id="score">Score: 100</div>
+    </div>
+
   </div>
-  </div>
+
   <div id="result"></div>
 </div>
+
+<div id="gameArea">
 
 <div id="gameArea">
   <div id="board"></div>
