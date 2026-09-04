@@ -749,13 +749,15 @@ puzzle = Array(81).fill(0);
 
   createBoard();
         }
-function loadGameById() {
-  document.getElementById("shareButton").addEventListener("click", function() {
-  alert("Share button is working!");
-});
-  function shareGame() {
+function shareGame() {
   alert("Game Number: " + currentPuzzleId);
-  }
+}
+
+document.getElementById("shareButton").addEventListener("click", function() {
+  shareGame();
+});
+
+function loadGameById() {
   let id = document.getElementById("gameIdInput").value.trim().toUpperCase();
 
   if (!/^[EMH]G-\d{6}$/.test(id)) {
