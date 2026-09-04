@@ -617,6 +617,10 @@ function enterNumber(number) {
   // Put the new number in the cell
   selectedCell.textContent = number;
   cellValues[index] = String(number);
+  localStorage.setItem(
+  "savedCells_" + currentPuzzleId,
+  JSON.stringify(cellValues)
+);
   
   highlightRowColumn(selectedCell);
   highlightSameNumbers();
