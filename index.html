@@ -405,6 +405,15 @@ function startTimer(reset = true) {
 
   timerInterval = setInterval(function() {
     seconds++;
+    localStorage.setItem(
+  "gameSeconds_" + currentPuzzleId,
+  seconds
+);
+
+localStorage.setItem(
+  "gameScore_" + currentPuzzleId,
+  score
+);
 
     const minutes = Math.floor(seconds / 60);
     const secs = seconds % 60;
@@ -835,8 +844,22 @@ document.getElementById("sudokuId").textContent =
 currentPuzzleId =
   prefix + "-" + String(puzzleNumber).padStart(6, "0");
     localStorage.setItem("currentPuzzleId", currentPuzzleId);
-  startTimer();
-  mistakes = 0;
+  const savedSeconds =
+  Number(localStorage.getItem("gameSeconds_" + currentPuzzleId) || 0);
+
+seconds = savedSeconds;
+
+const savedScore =
+  Number(localStorage.getItem("gameScore_" + currentPuzzleId) || 100);
+
+score = savedScore;
+
+document.getElementById("score").textContent =
+  "Score: " + score;
+
+startTimer(false);
+
+mistakes = 0;
     cellValues = JSON.parse(
   localStorage.getItem("savedCells_" + currentPuzzleId) ||
   "null"
