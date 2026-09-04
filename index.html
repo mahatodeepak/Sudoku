@@ -222,6 +222,17 @@ button {
   padding: 8px 14px;
   font-size: 16px;
 }
+  #board.paused .cell {
+  color: transparent !important;
+  text-shadow: none;
+}
+
+#board.paused .cell.selected,
+#board.paused .cell.same-number,
+#board.paused .cell.row-highlight,
+#board.paused .cell.col-highlight {
+  background: white;
+}
 </style>
 </head>
 
@@ -385,9 +396,12 @@ let mediumPuzzleNumber =
 let hardPuzzleNumber =
   Number(localStorage.getItem("hardPuzzleNumber") || 1);
 
-function startTimer() {
+function startTimer(reset = true) {
   clearInterval(timerInterval);
-  seconds = 0;
+
+  if (reset) {
+    seconds = 0;
+  }
 
   timerInterval = setInterval(function() {
     seconds++;
@@ -414,14 +428,14 @@ function stopTimer() {
     isPaused = true;
     stopTimer();
 
-    board.style.visibility = "hidden";
+    board.classList.add("paused");
     pauseButton.textContent = "▶️ Resume";
 
   } else {
     isPaused = false;
-    startTimer();
+    startTimer(false);
 
-    board.style.visibility = "visible";
+    board.classList.remove("paused");
     pauseButton.textContent = "⏸️ Pause";
   }
   }
