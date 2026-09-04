@@ -694,6 +694,10 @@ setTimeout(function() {
     selectedCell.textContent = "";
     selectedCell.style.color = "black";
     cellValues[index] = "";
+    localStorage.setItem(
+  "savedCells_" + currentPuzzleId,
+  JSON.stringify(cellValues)
+);
 
     highlightRowColumn(selectedCell);
     highlightSameNumbers();
