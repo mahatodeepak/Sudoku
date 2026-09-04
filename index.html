@@ -854,10 +854,7 @@ document.getElementById("sudokuId").textContent =
 currentPuzzleId =
   prefix + "-" + String(puzzleNumber).padStart(6, "0");
     localStorage.setItem("currentPuzzleId", currentPuzzleId);
-  const savedSeconds =
-  Number(localStorage.getItem("gameSeconds_" + currentPuzzleId) || 0);
-
-seconds = savedSeconds;
+  
 
 const savedScore =
   Number(localStorage.getItem("gameScore_" + currentPuzzleId) || 100);
