@@ -424,9 +424,19 @@ function createBoard() {
 
     if (puzzle[i] !== 0) {
       
-      cell.textContent = puzzle[i];
-      cell.style.fontWeight = "bold";
+  cell.textContent = puzzle[i];
+  cell.style.fontWeight = "bold";
+} else {
+
+  if (cellValues[i] !== "") {
+    cell.textContent = cellValues[i];
+
+    if (Number(cellValues[i]) === solution[i]) {
+      cell.style.color = "green";
     } else {
+      cell.style.color = "red";
+    }
+  }
       cell.contentEditable = false;
 
       cell.addEventListener("input", function() {
@@ -647,14 +657,26 @@ function enterNumber(number) {
   showMessage("❌ Wrong!");
 
   const wrongCell = selectedCell;
+const wrongIndex = index;
+const wrongValue = String(number);
 
 setTimeout(function() {
-  wrongCell.textContent = "";
-  wrongCell.style.color = "black";
-  cellValues[index] = "";
 
-  highlightRowColumn(wrongCell);
-  highlightSameNumbers();
+  // Only clear the cell if the player has not changed it
+  if (cellValues[wrongIndex] === wrongValue) {
+    wrongCell.textContent = "";
+    wrongCell.style.color = "black";
+    cellValues[wrongIndex] = "";
+
+    localStorage.setItem(
+      "savedCells_" + currentPuzzleId,
+      JSON.stringify(cellValues)
+    );
+
+    highlightRowColumn(wrongCell);
+    highlightSameNumbers();
+  }
+
 }, 3000);
 }
 
