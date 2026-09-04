@@ -210,6 +210,18 @@ button {
   margin: 10px auto;
   text-align: center;
   }
+  #actionButtons {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin: 2px auto 4px auto;
+}
+
+#actionButtons button {
+  margin: 0;
+  padding: 8px 14px;
+  font-size: 16px;
+}
 </style>
 </head>
 
@@ -227,14 +239,16 @@ button {
   <div id="result"></div>  
   <div id="winMessage"></div>
 </div>  
-<button id="pauseButton" onclick="togglePause()">⏸️ Pause</button>
-<div id="gameArea">
+
   
   <div id="board"></div>
   
 </div>
 
+  <div id="actionButtons">
   <button onclick="useHint()">💡 Hint</button>
+  <button id="pauseButton" onclick="togglePause()">⏸️ Pause</button>
+  </div>
   <div id="keypad">
   <button onclick="enterNumber(1)">1</button>
   <button onclick="enterNumber(2)">2</button>
