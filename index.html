@@ -705,6 +705,16 @@ function enterNumber(number) {
 
   mistakes++;
   score = Math.max(0, score - 5);
+    
+    localStorage.setItem(
+  "gameMistakes_" + currentPuzzleId,
+  mistakes
+);
+
+localStorage.setItem(
+  "gameScore_" + currentPuzzleId,
+  score
+);
 
   document.getElementById("mistakes").textContent =
     "Mistakes: " + mistakes;
@@ -859,14 +869,27 @@ document.getElementById("score").textContent =
 
 startTimer(false);
 
-mistakes = 0;
+const savedMistakes =
+  Number(localStorage.getItem("gameMistakes_" + currentPuzzleId) || 0);
+
+mistakes = savedMistakes;
+
+const savedScore =
+  Number(localStorage.getItem("gameScore_" + currentPuzzleId) || 100);
+
+score = savedScore;
+
+document.getElementById("mistakes").textContent =
+  "Mistakes: " + mistakes;
+
+document.getElementById("score").textContent =
+  "Score: " + score;
     cellValues = JSON.parse(
   localStorage.getItem("savedCells_" + currentPuzzleId) ||
   "null"
 ) || Array(81).fill("");
 selectedCell = null;
-  document.getElementById("mistakes").textContent = "Mistakes: 0";
-    score = 100;
+  
 document.getElementById("score").textContent = "Score: 100";
   generatePuzzle();
 
