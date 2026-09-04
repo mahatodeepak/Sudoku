@@ -227,8 +227,9 @@ button {
   <div id="result"></div>  
   <div id="winMessage"></div>
 </div>  
-
+<button id="pauseButton" onclick="togglePause()">⏸️ Pause</button>
 <div id="gameArea">
+  
   <div id="board"></div>
   
 </div>
@@ -358,6 +359,7 @@ let seconds = 0;
   let mistakes = 0;
   let score = 100;
   let selectedCell = null;
+  let isPaused = false;
   let cellValues = Array(81).fill("");
   
   let easyPuzzleNumber =
@@ -389,6 +391,25 @@ function startTimer() {
 
 function stopTimer() {
   clearInterval(timerInterval);
+  }
+  function togglePause() {
+  const board = document.getElementById("board");
+  const pauseButton = document.getElementById("pauseButton");
+
+  if (!isPaused) {
+    isPaused = true;
+    stopTimer();
+
+    board.style.visibility = "hidden";
+    pauseButton.textContent = "▶️ Resume";
+
+  } else {
+    isPaused = false;
+    startTimer();
+
+    board.style.visibility = "visible";
+    pauseButton.textContent = "⏸️ Pause";
+  }
   }
 let puzzle = [];
   let currentClues = 45;
