@@ -233,7 +233,7 @@ button {
   
 </div>
 
-
+  <button onclick="useHint()">💡 Hint</button>
   <div id="keypad">
   <button onclick="enterNumber(1)">1</button>
   <button onclick="enterNumber(2)">2</button>
@@ -685,7 +685,45 @@ setTimeout(function() {
   showResult();
   }
 }
-  
+  function useHint() {
+  if (selectedCell === null) {
+    showMessage("⚠️ Select an empty cell!");
+    return;
+  }
+
+  const cells = document.querySelectorAll(".cell");
+  const index = Array.from(cells).indexOf(selectedCell);
+
+  // Hint only works on an empty cell
+  if (puzzle[index] !== 0 || cellValues[index] !== "") {
+    showMessage("⚠️ Select an empty cell!");
+    return;
+  }
+
+  selectedCell.textContent = solution[index];
+  selectedCell.style.color = "green";
+  cellValues[index] = String(solution[index]);
+
+  score = Math.max(0, score - 10);
+
+  document.getElementById("score").textContent =
+    "Score: " + score;
+
+  localStorage.setItem(
+    "savedCells_" + currentPuzzleId,
+    JSON.stringify(cellValues)
+  );
+
+  highlightRowColumn(selectedCell);
+  highlightSameNumbers();
+
+  showMessage("💡 Hint used! -10 points");
+
+  if (checkComplete()) {
+    stopTimer();
+    showResult();
+  }
+  }
   function eraseNumber() {
   if (selectedCell !== null) {
     const cells = document.querySelectorAll(".cell");
