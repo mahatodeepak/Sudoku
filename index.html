@@ -814,101 +814,114 @@ function newGame() {
   createBoard();
 }
   function startGame(clues, newPuzzle = true) {
-    currentClues = clues;
-    let prefix;
-let puzzleNumber;
+  currentClues = clues;
 
-if (newPuzzle) {
+  let prefix;
+  let puzzleNumber;
 
-  if (clues === 45) {
-    prefix = "EG";
-    puzzleNumber = easyPuzzleNumber++;
-    localStorage.setItem("easyPuzzleNumber", easyPuzzleNumber);
+  if (newPuzzle) {
 
-  } else if (clues === 35) {
-    prefix = "MG";
-    puzzleNumber = mediumPuzzleNumber++;
-    localStorage.setItem("mediumPuzzleNumber", mediumPuzzleNumber);
+    if (clues === 45) {
+      prefix = "EG";
+      puzzleNumber = easyPuzzleNumber++;
+      localStorage.setItem("easyPuzzleNumber", easyPuzzleNumber);
+
+    } else if (clues === 35) {
+      prefix = "MG";
+      puzzleNumber = mediumPuzzleNumber++;
+      localStorage.setItem("mediumPuzzleNumber", mediumPuzzleNumber);
+
+    } else {
+      prefix = "HG";
+      puzzleNumber = hardPuzzleNumber++;
+      localStorage.setItem("hardPuzzleNumber", hardPuzzleNumber);
+    }
+
+    currentPuzzleId =
+      prefix + "-" + String(puzzleNumber).padStart(6, "0");
+
+    localStorage.setItem("currentPuzzleId", currentPuzzleId);
+
+    // New game starts fresh
+    seconds = 0;
+    score = 100;
+    mistakes = 0;
+
+    localStorage.removeItem("gameSeconds_" + currentPuzzleId);
+    localStorage.removeItem("gameScore_" + currentPuzzleId);
+    localStorage.removeItem("gameMistakes_" + currentPuzzleId);
 
   } else {
-    prefix = "HG";
-    puzzleNumber = hardPuzzleNumber++;
-    localStorage.setItem("hardPuzzleNumber", hardPuzzleNumber);
+
+    prefix = currentPuzzleId.substring(0, 2);
+    puzzleNumber = Number(currentPuzzleId.substring(3));
+
+    // Restore saved game
+    seconds =
+      Number(localStorage.getItem("gameSeconds_" + currentPuzzleId) || 0);
+
+    score =
+      Number(localStorage.getItem("gameScore_" + currentPuzzleId) || 100);
+
+    mistakes =
+      Number(localStorage.getItem("gameMistakes_" + currentPuzzleId) || 0);
   }
+
+  document.getElementById("sudokuId").textContent =
+    "Game Number: " +
+    prefix + "-" + String(puzzleNumber).padStart(6, "0");
 
   currentPuzzleId =
     prefix + "-" + String(puzzleNumber).padStart(6, "0");
 
   localStorage.setItem("currentPuzzleId", currentPuzzleId);
 
-} else {
+  document.getElementById("timer").textContent =
+    "Time: " +
+    String(Math.floor(seconds / 60)).padStart(2, "0") +
+    ":" +
+    String(seconds % 60).padStart(2, "0");
 
-  prefix = currentPuzzleId.substring(0, 2);
-  puzzleNumber = Number(currentPuzzleId.substring(3));
+  document.getElementById("mistakes").textContent =
+    "Mistakes: " + mistakes;
 
-}
+  document.getElementById("score").textContent =
+    "Score: " + score;
 
-document.getElementById("sudokuId").textContent =
-  "Game Number: " + prefix + "-" + String(puzzleNumber).padStart(6, "0");
+  startTimer(false);
 
-currentPuzzleId =
-  prefix + "-" + String(puzzleNumber).padStart(6, "0");
-    localStorage.setItem("currentPuzzleId", currentPuzzleId);
-  
+  cellValues = JSON.parse(
+    localStorage.getItem("savedCells_" + currentPuzzleId) ||
+    "null"
+  ) || Array(81).fill("");
 
-const savedScore =
-  Number(localStorage.getItem("gameScore_" + currentPuzzleId) || 100);
+  selectedCell = null;
+  isPaused = false;
 
-score = savedScore;
+  document.getElementById("pauseButton").textContent = "⏸️ Pause";
+  document.getElementById("board").classList.remove("paused");
 
-document.getElementById("score").textContent =
-  "Score: " + score;
-
-startTimer(false);
-
-const savedMistakes =
-  Number(localStorage.getItem("gameMistakes_" + currentPuzzleId) || 0);
-
-mistakes = savedMistakes;
-
-const savedScore =
-  Number(localStorage.getItem("gameScore_" + currentPuzzleId) || 100);
-
-score = savedScore;
-
-document.getElementById("mistakes").textContent =
-  "Mistakes: " + mistakes;
-
-document.getElementById("score").textContent =
-  "Score: " + score;
-    cellValues = JSON.parse(
-  localStorage.getItem("savedCells_" + currentPuzzleId) ||
-  "null"
-) || Array(81).fill("");
-selectedCell = null;
-  
-document.getElementById("score").textContent = "Score: 100";
   generatePuzzle();
 
   let positions = Array.from({length: 81}, (_, i) => i);
 
-let positionRandom = seededRandom(
-  seedFromId(currentPuzzleId + "-positions")
-);
+  let positionRandom = seededRandom(
+    seedFromId(currentPuzzleId + "-positions")
+  );
 
-for (let i = positions.length - 1; i > 0; i--) {
-  const j = Math.floor(positionRandom() * (i + 1));
-  [positions[i], positions[j]] = [positions[j], positions[i]];
-}
+  for (let i = positions.length - 1; i > 0; i--) {
+    const j = Math.floor(positionRandom() * (i + 1));
+    [positions[i], positions[j]] = [positions[j], positions[i]];
+  }
 
-puzzle = Array(81).fill(0);
+  puzzle = Array(81).fill(0);
 
   for (let i = 0; i < clues; i++) {
     puzzle[positions[i]] = solution[positions[i]];
   }
 
   createBoard();
-        }
+  }
 function shareGame() {
   alert("Game Number: " + currentPuzzleId);
 }
