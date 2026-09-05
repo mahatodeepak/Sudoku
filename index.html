@@ -938,7 +938,19 @@ function newGame() {
   createBoard();
   }
 function shareGame() {
-  alert("Game Number: " + currentPuzzleId);
+  const gameNumber = currentPuzzleId;
+  const shareText = "Play my Sudoku game!\nGame Number: " + gameNumber;
+
+  if (navigator.share) {
+    navigator.share({
+      title: "Sudoku Game",
+      text: shareText
+    }).catch(() => {});
+  } else {
+    navigator.clipboard.writeText(shareText).then(() => {
+      alert("Game number copied: " + gameNumber);
+    });
+  }
 }
 
 document.getElementById("shareButton").addEventListener("click", function() {
