@@ -257,7 +257,7 @@ button {
   <div id="gameInfo">  
   <div id="sudokuId">Game Number: EG-000001</div>    <div id="rightInfo">  <div id="timer">Time: 00:00</div>  
 <div id="mistakes">Mistakes: 0</div>  
-<div id="score">Score: 100</div>
+<div id="score">⭐ Score: 50</div>
 
   </div>  
   </div>  
@@ -811,6 +811,7 @@ function enterNumber(number) {
 
   mistakes++;
   score = Math.max(0, score - 5);
+    document.getElementById("score").textContent = "⭐ Score: " + score;
     
     localStorage.setItem(
   "gameMistakes_" + currentPuzzleId,
@@ -879,6 +880,7 @@ setTimeout(function() {
   cellValues[index] = String(solution[index]);
 
   score = Math.max(0, score - 10);
+    document.getElementById("score").textContent = "⭐ Score: " + score;
 
   document.getElementById("score").textContent =
     "Score: " + score;
@@ -958,6 +960,7 @@ if (clues === 45) {
 } else {
   score = 100;
 }
+    document.getElementById("score").textContent = "⭐ Score: " + score;
 
 mistakes = 0;
 puzzleCompleted = false;
