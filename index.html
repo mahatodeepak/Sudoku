@@ -1333,6 +1333,9 @@ if (sharedGameId && /^[EMH]G-\d{6}$/i.test(sharedGameId)) {
   }
 }
   updatePlayerInfo();
+  if (screen.orientation && screen.orientation.lock) {
+  screen.orientation.lock("portrait").catch(() => {});
+  }
 
 </script>
 
