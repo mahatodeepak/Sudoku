@@ -978,8 +978,12 @@ puzzleCompleted = false;
     seconds =
       Number(localStorage.getItem("gameSeconds_" + currentPuzzleId) || 0);
 
-    score =
-      Number(localStorage.getItem("gameScore_" + currentPuzzleId) || 100);
+    score = Number(
+  localStorage.getItem("gameScore_" + currentPuzzleId) ||
+  getMaximumScore()
+);
+
+document.getElementById("score").textContent = "⭐ Score: " + score;
 
     mistakes =
       Number(localStorage.getItem("gameMistakes_" + currentPuzzleId) || 0);
