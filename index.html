@@ -772,12 +772,18 @@ function checkComplete() {
     String(secs).padStart(2, "0");
 
   if (!puzzleCompleted) {
-    puzzleCompleted = true;
+  puzzleCompleted = true;
 
-    totalScore += score;
+  totalScore += score;
 
-    localStorage.setItem("totalScore", totalScore);
-    updatePlayerInfo();
+  localStorage.setItem("totalScore", totalScore);
+
+  localStorage.setItem(
+    "gameCompleted_" + currentPuzzleId,
+    "true"
+  );
+
+  updatePlayerInfo();
   }
 
   const level = getPlayerLevel();
@@ -1175,6 +1181,10 @@ document.getElementById("score").textContent = "⭐ Score: " + score;
     mistakes =
       Number(localStorage.getItem("gameMistakes_" + currentPuzzleId) || 0);
   }
+    puzzleCompleted =
+  localStorage.getItem(
+    "gameCompleted_" + currentPuzzleId
+  ) === "true";
 
   document.getElementById("sudokuId").textContent =
     "Game Number: " +
