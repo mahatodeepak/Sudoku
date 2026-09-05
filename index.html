@@ -479,7 +479,13 @@ localStorage.setItem(
 
 function stopTimer() {
   clearInterval(timerInterval);
-  }
+  timerInterval = null;
+
+  localStorage.setItem(
+    "gameSeconds_" + currentPuzzleId,
+    seconds
+  );
+}
   function togglePause() {
   const board = document.getElementById("board");
   const pauseButton = document.getElementById("pauseButton");
