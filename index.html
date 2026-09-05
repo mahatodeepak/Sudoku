@@ -848,8 +848,7 @@ localStorage.setItem(
   document.getElementById("mistakes").textContent =
     "Mistakes: " + mistakes;
 
-  document.getElementById("score").textContent =
-    "Score: " + score;
+  
 
   showMessage("❌ Wrong!");
 
@@ -904,8 +903,7 @@ setTimeout(function() {
   score = Math.max(0, score - 10);
     document.getElementById("score").textContent = "⭐ Score: " + score;
 
-  document.getElementById("score").textContent =
-    "Score: " + score;
+  
 
   localStorage.setItem(
     "savedCells_" + currentPuzzleId,
