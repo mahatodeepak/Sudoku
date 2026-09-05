@@ -939,7 +939,17 @@ function newGame() {
   }
 function shareGame() {
   const gameNumber = currentPuzzleId;
-  const shareText = "Play my Sudoku game!\nGame Number: " + gameNumber;
+
+  const gameLink =
+    window.location.origin +
+    window.location.pathname +
+    "?game=" +
+    encodeURIComponent(gameNumber);
+
+  const shareText =
+    "🧩 Play my Sudoku!\n" +
+    "Game Number: " + gameNumber + "\n" +
+    "Open this game: " + gameLink;
 
   if (navigator.share) {
     navigator.share({
@@ -948,7 +958,7 @@ function shareGame() {
     }).catch(() => {});
   } else {
     navigator.clipboard.writeText(shareText).then(() => {
-      alert("Game number copied: " + gameNumber);
+      alert("Game link copied!");
     });
   }
 }
