@@ -611,32 +611,86 @@ function checkComplete() {
   }
   function showResult() {
   const result = document.getElementById("result");
-    result.style.display = "block";
+
+  const minutes = Math.floor(seconds / 60);
+  const secs = seconds % 60;
+
+  const timeText =
+    String(minutes).padStart(2, "0") + ":" +
+    String(secs).padStart(2, "0");
 
   result.innerHTML =
-    "🏆 Congratulations!<br>" +
-    "Score: " + score + " / 100<br>" +
-    "Mistakes: " + mistakes + "<br>" +
-    document.getElementById("timer").textContent;
+    "<div style='font-size:26px; margin-bottom:15px;'>🏆 PUZZLE COMPLETE!</div>" +
+    "<div style='text-align:left; line-height:1.8;'>" +
+    "🎮 &nbsp;<b>Game Number:</b> " + currentPuzzleId + "<br>" +
+    "⭐ &nbsp;<b>Score:</b> " + score + " / 100<br>" +
+    "❌ &nbsp;<b>Mistakes:</b> " + mistakes + "<br>" +
+    "⏱️ &nbsp;<b>Time:</b> " + timeText +
+    "</div>" +
+    "<div style='margin-top:18px;'>" +
+    "<button onclick='closeResult(); startGame(currentClues, true);'>🔄 NEW PUZZLE</button>" +
+    "<button onclick='challengeFriend();'>📤 CHALLENGE A FRIEND</button>" +
+    "</div>";
 
+  result.style.display = "block";
   result.style.position = "fixed";
   result.style.top = "50%";
   result.style.left = "50%";
   result.style.transform = "translate(-50%, -50%)";
-  result.style.padding = "20px 25px";
+  result.style.padding = "20px";
   result.style.background = "white";
   result.style.border = "3px solid #333";
   result.style.borderRadius = "15px";
-  result.style.fontSize = "22px";
+  result.style.fontSize = "18px";
   result.style.fontWeight = "bold";
   result.style.textAlign = "center";
   result.style.zIndex = "10000";
+  result.style.width = "300px";
+  result.style.maxWidth = "85vw";
+}
 
-  setTimeout(function() {
+function closeResult() {
+  const result = document.getElementById("result");
   result.innerHTML = "";
   result.style.display = "none";
-}, 3000);
+}
+
+function challengeFriend() {
+  const gameNumber = currentPuzzleId;
+
+  const minutes = Math.floor(seconds / 60);
+  const secs = seconds % 60;
+
+  const timeText =
+    String(minutes).padStart(2, "0") + ":" +
+    String(secs).padStart(2, "0");
+
+  const gameLink =
+    window.location.origin +
+    window.location.pathname +
+    "?game=" +
+    encodeURIComponent(gameNumber);
+
+  const shareText =
+    "🧩 I solved this Sudoku!\n" +
+    "🎮 Game Number: " + gameNumber + "\n" +
+    "⭐ Score: " + score + "/100\n" +
+    "❌ Mistakes: " + mistakes + "\n" +
+    "⏱️ Time: " + timeText + "\n" +
+    "🎯 Can you beat my score?\n" +
+    "🔗 Open the puzzle: " + gameLink;
+
+  if (navigator.share) {
+    navigator.share({
+      title: "Sudoku Challenge",
+      text: shareText
+    }).catch(() => {});
+  } else {
+    navigator.clipboard.writeText(shareText).then(() => {
+      alert("Challenge copied!");
+    });
   }
+}
   function highlightRowColumn(cell) {
   const cells = document.querySelectorAll(".cell");
   const index = Array.from(cells).indexOf(cell);
