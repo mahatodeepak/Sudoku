@@ -1208,7 +1208,9 @@ document.getElementById("score").textContent = "⭐ Score: " + score;
   document.getElementById("score").textContent =
     "Score: " + score;
 
-  if (!puzzleCompleted) {
+  if (puzzleCompleted) {
+  stopTimer();
+} else {
   startTimer(false);
 }
 
