@@ -644,9 +644,7 @@ function checkComplete() {
     String(minutes).padStart(2, "0") + ":" +
     String(secs).padStart(2, "0");
 
-  result.innerHTML =
-    "<div style='font-size:26px; margin-bottom:15px;'>🏆 PUZZLE COMPLETE!</div>" +
-      if (!puzzleCompleted) {
+  if (!puzzleCompleted) {
     puzzleCompleted = true;
 
     totalScore += score;
@@ -655,11 +653,14 @@ function checkComplete() {
   }
 
   const level = getPlayerLevel();
+
+  result.innerHTML =
+    "<div style='font-size:26px; margin-bottom:15px;'>🏆 PUZZLE COMPLETE!</div>" +
     "<div style='text-align:left; line-height:1.8;'>" +
     "🎮 &nbsp;<b>Game Number:</b> " + currentPuzzleId + "<br>" +
     "⭐ &nbsp;<b>Score:</b> " + score + " / " + getMaximumScore() + "<br>" +
-"🏆 &nbsp;<b>Total Score:</b> " + totalScore + "<br>" +
-"🎖️ &nbsp;<b>Level:</b> " + level + "<br>" +
+    "🏆 &nbsp;<b>Total Score:</b> " + totalScore + "<br>" +
+    "🎖️ &nbsp;<b>Level:</b> " + level + "<br>" +
     "❌ &nbsp;<b>Mistakes:</b> " + mistakes + "<br>" +
     "⏱️ &nbsp;<b>Time:</b> " + timeText +
     "</div>" +
@@ -683,7 +684,7 @@ function checkComplete() {
   result.style.zIndex = "10000";
   result.style.width = "300px";
   result.style.maxWidth = "85vw";
-}
+  }
 
 function closeResult() {
   const result = document.getElementById("result");
