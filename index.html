@@ -267,6 +267,7 @@ button {
   <div id="leftInfo">
     <div id="totalScoreDisplay">🏆 Total Score: 0</div>
     <div id="levelDisplay">🎖️ Level: Beginner</div>
+    <button id="profileBtn" onclick="openProfile()">👤 Profile</button>
     <div id="sudokuId">🎮 Game Number: EG-000001</div>
   </div>
   <div id="rightInfo">  <div id="timer">Time: 00:00</div>  
@@ -1338,8 +1339,32 @@ if (sharedGameId && /^[EMH]G-\d{6}$/i.test(sharedGameId)) {
   }
 
   
+function openProfile() {
+  document.getElementById("profileModal").style.display = "flex";
 
+  const savedName = localStorage.getItem("playerName") || "";
+  document.getElementById("playerNameInput").value = savedName;
+}
+
+function closeProfile() {
+  document.getElementById("profileModal").style.display = "none";
+}
 </script>
+<div id="profileModal" style="display:none;">
+  <div class="profileBox">
+    <h2>👤 Player Profile</h2>
 
+    <label>Enter your name:</label>
+    <input
+      type="text"
+      id="playerNameInput"
+      maxlength="10"
+      placeholder="Your name"
+    >
+
+    <button onclick="savePlayerName()">Save</button>
+    <button onclick="closeProfile()">Cancel</button>
+  </div>
+</div>
 </body>
 </html>
