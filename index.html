@@ -1070,6 +1070,7 @@ setTimeout(function() {
   localStorage.removeItem("gameSeconds_" + currentPuzzleId);
   localStorage.removeItem("gameScore_" + currentPuzzleId);
   localStorage.removeItem("gameMistakes_" + currentPuzzleId);
+  localStorage.removeItem("gameCompleted_" + currentPuzzleId);
 
   document.getElementById("timer").textContent = "Time: 00:00";
   document.getElementById("mistakes").textContent = "Mistakes: 0";
@@ -1207,9 +1208,11 @@ document.getElementById("score").textContent = "⭐ Score: " + score;
   document.getElementById("score").textContent =
     "Score: " + score;
 
+  if (!puzzleCompleted) {
   startTimer(false);
+}
 
-  cellValues = JSON.parse(
+cellValues = JSON.parse(
     localStorage.getItem("savedCells_" + currentPuzzleId) ||
     "null"
   ) || Array(81).fill("");
