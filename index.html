@@ -1359,6 +1359,21 @@ function openProfile() {
 function closeProfile() {
   document.getElementById("profileModal").style.display = "none";
 }
+  function savePlayerName() {
+  const name = document.getElementById("playerNameInput").value.trim();
+
+  if (name === "") {
+    showMessage("⚠️ Please enter your name!");
+    return;
+  }
+
+  localStorage.setItem("playerName", name);
+
+  document.getElementById("profileBtn").textContent =
+    "👤 " + name;
+
+  closeProfile();
+  }
 </script>
 <div id="profileModal" style="display:none;">
   <div class="profileBox">
