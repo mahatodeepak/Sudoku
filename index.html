@@ -1337,6 +1337,19 @@ if (sharedGameId && /^[EMH]G-\d{6}$/i.test(sharedGameId)) {
   screen.orientation.lock("portrait").catch(() => {});
   }
 
+  @media screen and (orientation: landscape) {
+  body {
+    transform: rotate(90deg);
+    transform-origin: left top;
+    width: 100vh;
+    height: 100vw;
+    overflow-x: hidden;
+    position: absolute;
+    top: 0;
+    left: 100%;
+  }
+  }
+
 </script>
 
 </body>
