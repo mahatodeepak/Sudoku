@@ -173,6 +173,15 @@ button {
 #sudokuId {
   align-self: flex-end;
 }
+  #leftInfo {
+  text-align: left;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+#leftInfo div {
+  margin: 0;
+}
 
 #sudokuId {
   font-size: 14px;
@@ -254,10 +263,13 @@ button {
 
 <div id="topBar">  
   <h1>Sudoku</h1>  
-  <div id="gameInfo">  
+  <div id="gameInfo">
+  <div id="leftInfo">
     <div id="totalScoreDisplay">🏆 Total Score: 0</div>
-<div id="levelDisplay">🎖️ Level: Beginner</div>
-  <div id="sudokuId">Game Number: EG-000001</div>    <div id="rightInfo">  <div id="timer">Time: 00:00</div>  
+    <div id="levelDisplay">🎖️ Level: Beginner</div>
+    <div id="sudokuId">🎮 Game Number: EG-000001</div>
+  </div>
+  <div id="rightInfo">  <div id="timer">Time: 00:00</div>  
 <div id="mistakes">Mistakes: 0</div>  
 <div id="score">⭐ Score: 50</div>
 
@@ -417,6 +429,13 @@ let puzzleCompleted = false;
   } else {
     return "Beginner";
   }
+  }
+  function updatePlayerInfo() {
+  document.getElementById("totalScoreDisplay").textContent =
+    "🏆 Total Score: " + totalScore;
+
+  document.getElementById("levelDisplay").textContent =
+    "🎖️ Level: " + getPlayerLevel();
   }
   
   let easyPuzzleNumber =
@@ -652,6 +671,7 @@ function checkComplete() {
     totalScore += score;
 
     localStorage.setItem("totalScore", totalScore);
+    updatePlayerInfo();
   }
 
   const level = getPlayerLevel();
@@ -966,6 +986,7 @@ if (clues === 45) {
 
 mistakes = 0;
 puzzleCompleted = false;
+    updatePlayerInfo();
 
     localStorage.removeItem("gameSeconds_" + currentPuzzleId);
     localStorage.removeItem("gameScore_" + currentPuzzleId);
