@@ -395,11 +395,27 @@ for (let i = numbers.length - 1; i > 0; i--) {
   }
 let timerInterval;
 let seconds = 0;
-  let mistakes = 0;
-  let score = 100;
-  let selectedCell = null;
-  let isPaused = false;
-  let cellValues = Array(81).fill("");
+let mistakes = 0;
+let score = 100;
+let selectedCell = null;
+let isPaused = false;
+let cellValues = Array(81).fill("");
+
+let totalScore = Number(localStorage.getItem("totalScore") || 0);
+let puzzleCompleted = false;
+  function getPlayerLevel() {
+  if (totalScore >= 50000) {
+    return "Master";
+  } else if (totalScore >= 20000) {
+    return "Expert";
+  } else if (totalScore >= 5000) {
+    return "Skilled";
+  } else if (totalScore >= 2500) {
+    return "Learner";
+  } else {
+    return "Beginner";
+  }
+  }
   
   let easyPuzzleNumber =
   Number(localStorage.getItem("easyPuzzleNumber") || 1);
@@ -609,6 +625,15 @@ function checkComplete() {
     box.remove();
   }, 1000);
   }
+  function getMaximumScore() {
+  if (currentClues === 45) {
+    return 50;
+  } else if (currentClues === 35) {
+    return 75;
+  } else {
+    return 100;
+  }
+  }
   function showResult() {
   const result = document.getElementById("result");
 
@@ -621,9 +646,20 @@ function checkComplete() {
 
   result.innerHTML =
     "<div style='font-size:26px; margin-bottom:15px;'>🏆 PUZZLE COMPLETE!</div>" +
+      if (!puzzleCompleted) {
+    puzzleCompleted = true;
+
+    totalScore += score;
+
+    localStorage.setItem("totalScore", totalScore);
+  }
+
+  const level = getPlayerLevel();
     "<div style='text-align:left; line-height:1.8;'>" +
     "🎮 &nbsp;<b>Game Number:</b> " + currentPuzzleId + "<br>" +
-    "⭐ &nbsp;<b>Score:</b> " + score + " / 100<br>" +
+    "⭐ &nbsp;<b>Score:</b> " + score + " / " + getMaximumScore() + "<br>" +
+"🏆 &nbsp;<b>Total Score:</b> " + totalScore + "<br>" +
+"🎖️ &nbsp;<b>Level:</b> " + level + "<br>" +
     "❌ &nbsp;<b>Mistakes:</b> " + mistakes + "<br>" +
     "⏱️ &nbsp;<b>Time:</b> " + timeText +
     "</div>" +
@@ -912,9 +948,18 @@ function newGame() {
     localStorage.setItem("currentPuzzleId", currentPuzzleId);
 
     // New game starts fresh
-    seconds = 0;
-    score = 100;
-    mistakes = 0;
+seconds = 0;
+
+if (clues === 45) {
+  score = 50;
+} else if (clues === 35) {
+  score = 75;
+} else {
+  score = 100;
+}
+
+mistakes = 0;
+puzzleCompleted = false;
 
     localStorage.removeItem("gameSeconds_" + currentPuzzleId);
     localStorage.removeItem("gameScore_" + currentPuzzleId);
