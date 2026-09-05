@@ -285,8 +285,10 @@ button {
 </div>
 
   <div id="actionButtons">
+  <button onclick="previousGame()">←</button>
   <button onclick="useHint()">💡 Hint</button>
   <button id="pauseButton" onclick="togglePause()">⏸️ Pause</button>
+  <button onclick="nextGame()">→</button>
   </div>
   <div id="keypad">
   <button onclick="enterNumber(1)">1</button>
@@ -486,6 +488,103 @@ function stopTimer() {
     seconds
   );
 }
+  function previousGame() {
+  let prefix = currentPuzzleId.substring(0, 2);
+  let number = Number(currentPuzzleId.substring(3));
+
+  if (number <= 1) {
+    showMessage("⚠️ This is the first puzzle!");
+    return;
+  }
+
+  number--;
+
+  currentPuzzleId =
+    prefix + "-" + String(number).padStart(6, "0");
+
+  startGame(currentClues, false);
+}
+
+
+function nextGame() {
+  let prefix = currentPuzzleId.substring(0, 2);
+  let number = Number(currentPuzzleId.substring(3));
+
+  number++;
+
+  currentPuzzleId =
+    prefix + "-" + String(number).padStart(6, "0");
+
+  startGame(currentClues, false);
+}
+
+
+function retryGame() {
+  closeResult();
+
+  clearInterval(timerInterval);
+
+  seconds = 0;
+  mistakes = 0;
+  puzzleCompleted = false;
+
+  if (currentClues === 45) {
+    score = 50;
+  } else if (currentClues === 35) {
+    score = 75;
+  } else {
+    score = 100;
+  }
+
+  cellValues = Array(81).fill("");
+
+  localStorage.removeItem("savedCells_" + currentPuzzleId);
+  localStorage.removeItem("gameSeconds_" + currentPuzzleId);
+  localStorage.removeItem("gameScore_" + currentPuzzleId);
+  localStorage.removeItem("gameMistakes_" + currentPuzzleId);
+
+  document.getElementById("score").textContent =
+    "⭐ Score: " + score;
+
+  document.getElementById("mistakes").textContent =
+    "Mistakes: 0";
+
+  document.getElementById("timer").textContent =
+    "Time: 00:00";
+
+  document.getElementById("pauseButton").textContent =
+    "⏸️ Pause";
+
+  isPaused = false;
+
+  document.getElementById("board").classList.remove("paused");
+
+  generatePuzzle();
+
+  let positions = Array.from({length: 81}, (_, i) => i);
+
+  let positionRandom = seededRandom(
+    seedFromId(currentPuzzleId + "-positions")
+  );
+
+  for (let i = positions.length - 1; i > 0; i--) {
+    const j = Math.floor(positionRandom() * (i + 1));
+    [positions[i], positions[j]] =
+      [positions[j], positions[i]];
+  }
+
+  puzzle = Array(81).fill(0);
+
+  for (let i = 0; i < currentClues; i++) {
+    puzzle[positions[i]] = solution[positions[i]];
+  }
+
+  selectedCell = null;
+
+  createBoard();
+
+  startTimer(false);
+}
   function togglePause() {
   const board = document.getElementById("board");
   const pauseButton = document.getElementById("pauseButton");
@@ -663,6 +762,8 @@ function checkComplete() {
   }
   function showResult() {
   const result = document.getElementById("result");
+      document.getElementById("pauseButton").textContent = "🔄 Retry";
+  document.getElementById("pauseButton").onclick = retryGame;
 
   const minutes = Math.floor(seconds / 60);
   const secs = seconds % 60;
@@ -1047,7 +1148,9 @@ document.getElementById("score").textContent = "⭐ Score: " + score;
   selectedCell = null;
   isPaused = false;
 
-  document.getElementById("pauseButton").textContent = "⏸️ Pause";
+  
+    document.getElementById("pauseButton").textContent = "⏸️ Pause";
+document.getElementById("pauseButton").onclick = togglePause;
   document.getElementById("board").classList.remove("paused");
 
   generatePuzzle();
