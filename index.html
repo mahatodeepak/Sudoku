@@ -987,7 +987,15 @@ function loadGameById() {
 
   localStorage.setItem("currentPuzzleId", currentPuzzleId);
 }
+  const urlParams = new URLSearchParams(window.location.search);
+const sharedGameId = urlParams.get("game");
+
+if (sharedGameId && /^[EMH]G-\d{6}$/.test(sharedGameId.toUpperCase())) {
+  currentPuzzleId = sharedGameId.toUpperCase();
+  localStorage.setItem("currentPuzzleId", currentPuzzleId);
+}
 let savedPuzzleId = localStorage.getItem("currentPuzzleId");
+  
 
 if (savedPuzzleId) {
   currentPuzzleId = savedPuzzleId;
