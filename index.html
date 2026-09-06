@@ -1451,6 +1451,162 @@ function closeProfile() {
   document.getElementById("profileModal").style.display =
     "none";
 }
+  function updateProfileStats() {
+
+  // Total Score
+  const total =
+    Number(localStorage.getItem("totalScore") || 0);
+
+  document.getElementById("profileTotalScore").textContent =
+    total;
+
+  // Level
+  document.getElementById("profileLevel").textContent =
+    getPlayerLevel();
+
+
+  // Collect saved Sudoku game IDs
+  const gameIds = new Set();
+
+  for (let i = 0; i < localStorage.length; i++) {
+
+    const key = localStorage.key(i);
+
+    if (!key) continue;
+
+    let gameId = null;
+
+    if (key.startsWith("gameCompleted_")) {
+      gameId = key.replace("gameCompleted_", "");
+    }
+
+    if (key.startsWith("gameScore_")) {
+      gameId = key.replace("gameScore_", "");
+    }
+
+    if (key.startsWith("gameSeconds_")) {
+      gameId = key.replace("gameSeconds_", "");
+    }
+
+    if (key.startsWith("gameMistakes_")) {
+      gameId = key.replace("gameMistakes_", "");
+    }
+
+    if (key.startsWith("savedCells_")) {
+      gameId = key.replace("savedCells_", "");
+    }
+
+    if (gameId && /^[EMH]G-\d{6}$/.test(gameId)) {
+      gameIds.add(gameId);
+    }
+  }
+
+
+  // Include current game
+  if (
+    currentPuzzleId &&
+    /^[EMH]G-\d{6}$/.test(currentPuzzleId)
+  ) {
+    gameIds.add(currentPuzzleId);
+  }
+
+
+  let gamesPlayed = gameIds.size;
+  let gamesCompleted = 0;
+  let highestScore = 0;
+  let totalMistakes = 0;
+  let bestTime = null;
+
+
+  gameIds.forEach(function(gameId) {
+
+    const completed =
+      localStorage.getItem(
+        "gameCompleted_" + gameId
+      ) === "true";
+
+    if (completed) {
+      gamesCompleted++;
+    }
+
+
+    const gameScore =
+      Number(
+        localStorage.getItem(
+          "gameScore_" + gameId
+        ) || 0
+      );
+
+    if (gameScore > highestScore) {
+      highestScore = gameScore;
+    }
+
+
+    const gameMistakes =
+      Number(
+        localStorage.getItem(
+          "gameMistakes_" + gameId
+        ) || 0
+      );
+
+    totalMistakes += gameMistakes;
+
+
+    if (completed) {
+
+      const gameTime =
+        Number(
+          localStorage.getItem(
+            "gameSeconds_" + gameId
+          ) || 0
+        );
+
+      if (
+        gameTime > 0 &&
+        (bestTime === null ||
+         gameTime < bestTime)
+      ) {
+        bestTime = gameTime;
+      }
+    }
+
+  });
+
+
+  // Display statistics
+  document.getElementById("profileGamesPlayed").textContent =
+    gamesPlayed;
+
+  document.getElementById("profileGamesCompleted").textContent =
+    gamesCompleted;
+
+  document.getElementById("profileHighestScore").textContent =
+    highestScore;
+
+  document.getElementById("profileMistakes").textContent =
+    totalMistakes;
+
+
+  // Best Time
+  if (bestTime !== null) {
+
+    const minutes =
+      Math.floor(bestTime / 60);
+
+    const secs =
+      bestTime % 60;
+
+    document.getElementById("profileBestTime").textContent =
+      String(minutes).padStart(2, "0") +
+      ":" +
+      String(secs).padStart(2, "0");
+
+  } else {
+
+    document.getElementById("profileBestTime").textContent =
+      "--:--";
+  }
+    }
 </script>
 <!-- your game buttons/code above -->
 
