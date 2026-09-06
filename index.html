@@ -1392,15 +1392,36 @@ if (sharedGameId && /^[EMH]G-\d{6}$/i.test(sharedGameId)) {
 function openProfile() {
   document.getElementById("profileModal").style.display = "flex";
 
-  const savedName = localStorage.getItem("playerName") || "";
-  document.getElementById("playerNameInput").value = savedName;
+  const savedName =
+    localStorage.getItem("playerName") || "Player";
+
+  document.getElementById("profileName").textContent =
+    savedName;
+
+  document.getElementById("nameEditArea").style.display =
+    "none";
+
+  updateProfileStats();
 }
 
-function closeProfile() {
-  document.getElementById("profileModal").style.display = "none";
+
+function editPlayerName() {
+  const savedName =
+    localStorage.getItem("playerName") || "";
+
+  document.getElementById("playerNameInput").value =
+    savedName;
+
+  document.getElementById("nameEditArea").style.display =
+    "block";
+
+  document.getElementById("playerNameInput").focus();
 }
-  function savePlayerName() {
-  const name = document.getElementById("playerNameInput").value.trim();
+
+
+function savePlayerName() {
+  const name =
+    document.getElementById("playerNameInput").value.trim();
 
   if (name === "") {
     showMessage("⚠️ Please enter your name!");
@@ -1409,11 +1430,27 @@ function closeProfile() {
 
   localStorage.setItem("playerName", name);
 
+  document.getElementById("profileName").textContent =
+    name;
+
   document.getElementById("profileBtn").textContent =
     "👤 " + name;
 
-  closeProfile();
-  }
+  document.getElementById("nameEditArea").style.display =
+    "none";
+}
+
+
+function cancelEditName() {
+  document.getElementById("nameEditArea").style.display =
+    "none";
+}
+
+
+function closeProfile() {
+  document.getElementById("profileModal").style.display =
+    "none";
+}
 </script>
 <!-- your game buttons/code above -->
 
