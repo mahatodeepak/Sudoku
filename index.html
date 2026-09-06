@@ -965,6 +965,11 @@ function enterNumber(number) {
   const cells = document.querySelectorAll(".cell");
   const index = Array.from(cells).indexOf(selectedCell);
 
+  // 🔒 Do not allow changing pre-filled puzzle numbers
+  if (puzzle[index] !== 0) {
+    return;
+  }
+
   const oldValue = cellValues[index];
 
   // Same number again: do nothing
@@ -975,73 +980,75 @@ function enterNumber(number) {
   // Put the new number in the cell
   selectedCell.textContent = number;
   cellValues[index] = String(number);
-  
-  
+
   highlightRowColumn(selectedCell);
   highlightSameNumbers();
 
   // Correct answer
   if (number === solution[index]) {
     selectedCell.style.color = "green";
-    localStorage.setItem(
-  "savedCells_" + currentPuzzleId,
-  JSON.stringify(cellValues)
-);
-    showMessage("🎉 Great!");
-  }
-
-  // Wrong answer
-  else {
-  selectedCell.style.color = "red";
-
-  mistakes++;
-  score = Math.max(0, score - 5);
-    document.getElementById("score").textContent = "⭐ Score: " + score;
-    
-    localStorage.setItem(
-  "gameMistakes_" + currentPuzzleId,
-  mistakes
-);
-
-localStorage.setItem(
-  "gameScore_" + currentPuzzleId,
-  score
-);
-
-  document.getElementById("mistakes").textContent =
-    "Mistakes: " + mistakes;
-
-  
-
-  showMessage("❌ Wrong!");
-
-  const wrongCell = selectedCell;
-const wrongIndex = index;
-const wrongValue = String(number);
-
-setTimeout(function() {
-
-  // Only clear the cell if the player has not changed it
-  if (cellValues[wrongIndex] === wrongValue) {
-    wrongCell.textContent = "";
-    wrongCell.style.color = "black";
-    cellValues[wrongIndex] = "";
 
     localStorage.setItem(
       "savedCells_" + currentPuzzleId,
       JSON.stringify(cellValues)
     );
 
-    highlightRowColumn(wrongCell);
-    highlightSameNumbers();
+    showMessage("🎉 Great!");
   }
 
-}, 3000);
-}
+  // Wrong answer
+  else {
+    selectedCell.style.color = "red";
+
+    mistakes++;
+    score = Math.max(0, score - 5);
+
+    document.getElementById("score").textContent =
+      "⭐ Score: " + score;
+
+    localStorage.setItem(
+      "gameMistakes_" + currentPuzzleId,
+      mistakes
+    );
+
+    localStorage.setItem(
+      "gameScore_" + currentPuzzleId,
+      score
+    );
+
+    document.getElementById("mistakes").textContent =
+      "Mistakes: " + mistakes;
+
+    showMessage("❌ Wrong!");
+
+    const wrongCell = selectedCell;
+    const wrongIndex = index;
+    const wrongValue = String(number);
+
+    setTimeout(function() {
+
+      // Only clear the cell if the player has not changed it
+      if (cellValues[wrongIndex] === wrongValue) {
+
+        wrongCell.textContent = "";
+        wrongCell.style.color = "black";
+        cellValues[wrongIndex] = "";
+
+        localStorage.setItem(
+          "savedCells_" + currentPuzzleId,
+          JSON.stringify(cellValues)
+        );
+
+        highlightRowColumn(wrongCell);
+        highlightSameNumbers();
+      }
+
+    }, 3000);
+  }
 
   if (checkComplete()) {
-  stopTimer();
-  showResult();
+    stopTimer();
+    showResult();
   }
 }
   function useHint() {
