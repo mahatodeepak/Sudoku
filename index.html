@@ -1417,18 +1417,22 @@ function closeProfile() {
 </script>
 <div id="profileModal" style="display:none;">
   <div class="profileBox">
-    <h2>👤 Player Profile</h2>
+    <h2>👤 Player Profile</h2><p>
+  <strong>Name:</strong>
+  <span id="profileName">Player</span>
+  <button onclick="editPlayerName()" id="editNameBtn">✏️ Edit</button>
+</p>
 
-    <label>Enter your name:</label>
-    <input
-      type="text"
-      id="playerNameInput"
-      maxlength="10"
-      placeholder="Your name"
-    >
+<p>🏆 Total Score: <span id="profileTotalScore">0</span></p>
+<p>🎖️ Level: <span id="profileLevel">Beginner</span></p>
+<p>🎮 Games Played: <span id="profileGamesPlayed">0</span></p>
+<p>✅ Games Completed: <span id="profileGamesCompleted">0</span></p>
+<p>⭐ Highest Score: <span id="profileHighestScore">0</span></p>
+<p>⏱️ Best Time: <span id="profileBestTime">--:--</span></p>
+<p>❌ Total Mistakes: <span id="profileMistakes">0</span></p>
 
-    <button onclick="savePlayerName()">Save</button>
-    <button onclick="closeProfile()">Cancel</button>
+<button onclick="closeProfile()">Close</button>
+
   </div>
 </div>
 </body>
