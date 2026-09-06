@@ -481,6 +481,11 @@ let puzzleCompleted = false;
 
   document.getElementById("levelDisplay").textContent =
     "🎖️ Level: " + getPlayerLevel();
+
+  const savedName = localStorage.getItem("playerName") || "";
+
+  document.getElementById("profileBtn").textContent =
+    savedName ? "👤 " + savedName : "👤 Profile";
   }
   
   let easyPuzzleNumber =
