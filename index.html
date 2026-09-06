@@ -1415,25 +1415,46 @@ function closeProfile() {
   closeProfile();
   }
 </script>
+<!-- your game buttons/code above -->
+
 <div id="profileModal" style="display:none;">
   <div class="profileBox">
-    <h2>👤 Player Profile</h2><p>
-  <strong>Name:</strong>
-  <span id="profileName">Player</span>
-  <button onclick="editPlayerName()" id="editNameBtn">✏️ Edit</button>
-</p>
 
-<p>🏆 Total Score: <span id="profileTotalScore">0</span></p>
-<p>🎖️ Level: <span id="profileLevel">Beginner</span></p>
-<p>🎮 Games Played: <span id="profileGamesPlayed">0</span></p>
-<p>✅ Games Completed: <span id="profileGamesCompleted">0</span></p>
-<p>⭐ Highest Score: <span id="profileHighestScore">0</span></p>
-<p>⏱️ Best Time: <span id="profileBestTime">--:--</span></p>
-<p>❌ Total Mistakes: <span id="profileMistakes">0</span></p>
+    <h2>👤 Player Profile</h2>
 
-<button onclick="closeProfile()">Close</button>
+    <p>
+      <strong>Name:</strong>
+      <span id="profileName">Player</span>
+      <button onclick="editPlayerName()" id="editNameBtn">
+        ✏️ Edit
+      </button>
+    </p>
+
+    <div id="nameEditArea" style="display:none;">
+      <input
+        type="text"
+        id="playerNameInput"
+        maxlength="10"
+        placeholder="Enter your name"
+      >
+
+      <button onclick="savePlayerName()">Save</button>
+      <button onclick="cancelEditName()">Cancel</button>
+    </div>
+
+    <p>🏆 Total Score: <span id="profileTotalScore">0</span></p>
+    <p>🎖️ Level: <span id="profileLevel">Beginner</span></p>
+    <p>🎮 Games Played: <span id="profileGamesPlayed">0</span></p>
+    <p>✅ Games Completed: <span id="profileGamesCompleted">0</span></p>
+    <p>⭐ Highest Score: <span id="profileHighestScore">0</span></p>
+    <p>⏱️ Best Time: <span id="profileBestTime">--:--</span></p>
+    <p>❌ Total Mistakes: <span id="profileMistakes">0</span></p>
+
+    <button onclick="closeProfile()">Close</button>
 
   </div>
 </div>
+
+<!-- your other code continues below -->
 </body>
 </html>
